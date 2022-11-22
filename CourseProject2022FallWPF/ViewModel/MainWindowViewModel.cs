@@ -1,4 +1,6 @@
-﻿using CourseProject2022FallWPF.Model.Commands;
+﻿using CourseProject2022FallBL.Models;
+using CourseProject2022FallWPF.Model.Commands;
+using CourseProject2022FallWPF.Services;
 using CourseProject2022FallWPF.View;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -42,6 +44,5 @@ namespace CourseProject2022FallWPF.ViewModel
             ActivePage = new FormattedView();
         }
         #endregion
-
     }
 }

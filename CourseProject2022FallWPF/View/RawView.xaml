@@ -12,22 +12,43 @@
     </Page.DataContext>
     <TabControl>
         <TabItem Header="Income">
-            <DataGrid CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding IncomeTable}">
+            <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding IncomeTable}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding ID}" Header="ID" />
+                    <DataGridTextColumn Binding="{Binding ID}" Header="ID"/>
                     <DataGridTextColumn Binding="{Binding Operation.Value}" Header="Operation Value" />
                     <DataGridTextColumn Binding="{Binding Operation.Currency.Name}" Header="Currency Name" />
                     <DataGridTextColumn Binding="{Binding Operation.Currency.Ratio}" Header="Currency Ratio" />
                     <DataGridTextColumn Binding="{Binding Operation.Target.Name}" Header="Target Name" />
                     <DataGridTextColumn Binding="{Binding Operation.User.Name}" Header="User Name" />
-                    <DataGridTextColumn Binding="{Binding Operation.Comment}" Header="Operation Cpmment" />
+                    <DataGridTextColumn Binding="{Binding Operation.Comment}" Header="Operation Comment" />
                 </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add" Command="{Binding AddIncome}"/>
+                        <MenuItem Header="Edit" Command="{Binding EditIncome}"/>
+                        <MenuItem Header="Remove" Command="{Binding RemoveIncome}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
             </DataGrid>
         </TabItem>
         <TabItem Header="Expense"></TabItem>
         <TabItem Header="Operation"></TabItem>
         <TabItem Header="Currency"></TabItem>
-        <TabItem Header="User"></TabItem>
         <TabItem Header="Target"></TabItem>
+        <TabItem Header="User">
+            <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding UserTable}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding ID}" Header="ID"/>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add" Command="{Binding Add}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                        <MenuItem Header="Edit" Command="{Binding Edit}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                        <MenuItem Header="Remove" Command="{Binding Remove}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+        </TabItem>
     </TabControl>
 </Page>
