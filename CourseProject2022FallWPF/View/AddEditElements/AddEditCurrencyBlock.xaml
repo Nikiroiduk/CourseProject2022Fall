@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="CourseProject2022FallWPF.View.AddEditElements.AddEditCurrencyBlock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:CourseProject2022FallWPF.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:CurrencyConverter x:Key="CurrencyConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <TextBox Grid.Row="0" Width="100" materialDesign:HintAssist.HelperText="Name"
+                    Text="{Binding CurrencyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Row="1" Width="100" materialDesign:HintAssist.HelperText="Name"
+                    Text="{Binding CurrencyRatio, Converter = {StaticResource CurrencyConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+    </Grid>
+</UserControl>

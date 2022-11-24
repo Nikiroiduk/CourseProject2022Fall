@@ -1,14 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace CourseProject2022FallBL.Models
 {
-    public class User
+    public class User : INotifyPropertyChanged
     {
         public int ID { get; set; }
-        public string Name { get; set; } = "Undefined";
+        public string Name { 
+            get { return _Name; } 
+            set { _Name = value; NotifyPropertyChanged(); } 
+        }
+
+        private string _Name = "Undefined";
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

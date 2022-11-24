@@ -15,9 +15,12 @@ using System.Windows.Shapes;
 
 namespace CourseProject2022FallWPF.View.AddEditElements
 {
-    public partial class AddEditUserBlock : UserControl
+    /// <summary>
+    /// Interaction logic for AddEditCurrencyBlock.xaml
+    /// </summary>
+    public partial class AddEditCurrencyBlock : UserControl
     {
-        public AddEditUserBlock()
+        public AddEditCurrencyBlock()
         {
             InitializeComponent();
         }

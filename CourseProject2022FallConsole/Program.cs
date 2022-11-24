@@ -57,14 +57,18 @@ using CourseProject2022FallBL.Services;
 //    Currency = new Currency { ID = 7, Name = "eur", Ratio = 1.03f }
 //}));
 
-Console.WriteLine(DataService.AddIncome(new Income
-{
-    Operation = new Operation
-    {
-        Value = 300,
-        Comment = "Comment",
-        User = new User { ID = 2, Name = "Meh" },
-        Target = new Target { ID = 4, Name = "Food" },
-        Currency = new Currency { ID = 7, Name = "eur", Ratio = 1.03f }
-    }
-}));
+//Console.WriteLine(DataService.AddIncome(new Income
+//{
+//    Operation = new Operation
+//    {
+//        Value = 300,
+//        Comment = "Comment",
+//        User = new User { ID = 2, Name = "Meh" },
+//        Target = new Target { ID = 4, Name = "Food" },
+//        Currency = new Currency { ID = 7, Name = "eur", Ratio = 1.03f }
+//    }
+//}));
+
+//Console.WriteLine(DataService.UpdateUser(new User { ID = 16, Name = "UpsertUserNewNewer"}));
+
+//Console.WriteLine(DataService.RemoveUser(new User { ID = 16, Name = "UpsertUserNewNewer" }));

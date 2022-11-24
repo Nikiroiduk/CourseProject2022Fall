@@ -20,7 +20,37 @@ namespace CourseProject2022FallWPF.Services
             AddEditWindowViewModel winVm = new (u);
             win.DataContext = winVm;
             if ((bool)win.ShowDialog())
+            {
+                u.Name = winVm.UserName;
                 return u;
+            }
+            return null;
+        }
+
+        private Target Visit(Target t)
+        {
+            AddEditWindow win = new();
+            AddEditWindowViewModel winVm = new(t);
+            win.DataContext = winVm;
+            if ((bool)win.ShowDialog())
+            {
+                t.Name = winVm.TargetName;
+                return t;
+            }
+            return null;
+        }
+
+        private Currency Visit(Currency c)
+        {
+            AddEditWindow win = new();
+            AddEditWindowViewModel winVm = new(c);
+            win.DataContext = winVm;
+            if ((bool)win.ShowDialog())
+            {
+                c.Name = winVm.CurrencyName;
+                c.Ratio = winVm.CurrencyRatio;
+                return c;
+            }
             return null;
         }
     }

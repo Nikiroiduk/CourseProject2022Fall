@@ -103,6 +103,48 @@ namespace CourseProject2022FallBL
             return res;
         }
 
+        internal static bool UpdateUser(User user)
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = "UPDATE [User] SET Name = @Name WHERE ID = @ID";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@Name", user.Name);
+                command.Parameters.AddWithValue("@ID", user.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        internal static bool RemoveUser(User user)
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = "DELETE FROM [User] WHERE ID = @ID AND Name = @Name";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@Name", user.Name);
+                command.Parameters.AddWithValue("@ID", user.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
 
         #region Target
@@ -194,6 +236,48 @@ namespace CourseProject2022FallBL
             return res;
         }
 
+        internal static bool UpdateTarget(Target target)
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = "UPDATE [Target] SET Name = @Name WHERE ID = @ID";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@Name", target.Name);
+                command.Parameters.AddWithValue("@ID", target.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        internal static bool RemoveTarget(Target target)
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = "DELETE FROM [Target] WHERE ID = @ID AND Name = @Name";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@Name", target.Name);
+                command.Parameters.AddWithValue("@ID", target.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
 
         #region Currency
@@ -248,7 +332,7 @@ namespace CourseProject2022FallBL
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);
-                var sql = $"SELECT ID, Name FROM Currency";
+                var sql = $"SELECT ID, Name, Ratio FROM Currency";
                 using SqlCommand command = new(sql, connection);
                 connection.Open();
                 using SqlDataReader reader = command.ExecuteReader();
@@ -286,6 +370,50 @@ namespace CourseProject2022FallBL
                 return res;
             }
             return res;
+        }
+
+        internal static bool UpdateCurrency(Currency currency)
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = "UPDATE Currency SET Name = @Name, Ratio = @Ratio WHERE ID = @ID";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@Name", currency.Name);
+                command.Parameters.AddWithValue("@Ratio", currency.Ratio);
+                command.Parameters.AddWithValue("@ID", currency.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        internal static bool RemoveCurrency(Currency currency)
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = "DELETE FROM Currency WHERE ID = @ID AND Name = @Name AND Ratio = @Ratio";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@Name", currency.Name);
+                command.Parameters.AddWithValue("@Ratio", currency.Ratio);
+                command.Parameters.AddWithValue("@ID", currency.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         #endregion

@@ -26,6 +26,16 @@ namespace CourseProject2022FallBL.Services
             return SqlServerCrud.GetUserID(user);
         }
 
+        public static bool UpdateUser(User user)
+        {
+            return SqlServerCrud.UpdateUser(user);
+        }
+
+        public static bool RemoveUser(User user)
+        {
+            return SqlServerCrud.RemoveUser(user);
+        }
+
         #endregion
 
         #region Target
@@ -50,6 +60,16 @@ namespace CourseProject2022FallBL.Services
             return SqlServerCrud.GetTargetID(target);
         }
 
+        public static bool UpdateTarget(Target target)
+        {
+            return SqlServerCrud.UpdateTarget(target);
+        }
+
+        public static bool RemoveTarget(Target target)
+        {
+            return SqlServerCrud.RemoveTarget(target);
+        }
+
         #endregion
 
         #region Currency
@@ -72,6 +92,16 @@ namespace CourseProject2022FallBL.Services
         public static int GetCurrencyID(Currency currency)
         {
             return SqlServerCrud.GetCurrencyID(currency);
+        }
+
+        public static bool UpdateCurrency(Currency currency)
+        {
+            return SqlServerCrud.UpdateCurrency(currency);
+        }
+
+        public static bool RemoveCurrency(Currency currency)
+        {
+            return SqlServerCrud.RemoveCurrency(currency);
         }
 
         #endregion
