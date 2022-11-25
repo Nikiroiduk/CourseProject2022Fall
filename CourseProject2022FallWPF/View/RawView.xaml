@@ -12,25 +12,40 @@
         <local:RawViewViewModel/>
     </Page.DataContext>
     <Grid>
-        <Grid Margin="20,20,20,20"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Height="100" Panel.ZIndex="1000" Visibility="Visible">
-            <Button Style="{DynamicResource MaterialDesignFloatingActionLightButton}" Command="{Binding Add}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel = 3,AncestorType = TabControl}, Path=TabControl.SelectedItem}">
-                <Canvas Height="30"  Width="30">
-                    <Path Stroke="#FFFFFF" StrokeThickness="2">
-                        <Path.Data>
-                            <PathGeometry>
-                                <PathGeometry.Figures>
-                                    <PathFigure StartPoint="6,14">
-                                        <LineSegment Point="22,14"/>
-                                    </PathFigure>
-                                    <PathFigure StartPoint="14,6">
-                                        <LineSegment Point="14,22"/>
-                                    </PathFigure>
-                                </PathGeometry.Figures>
-                            </PathGeometry>
-                        </Path.Data>
-                    </Path>
-                </Canvas>
-            </Button>
+        <Grid Margin="20,20,20,20"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Height="150" Panel.ZIndex="1000" Visibility="Visible">
+            <StackPanel Orientation="Vertical">
+                <Button Margin="0, 0, 0, 10" Style="{DynamicResource MaterialDesignFloatingActionLightButton}" Command="{Binding Reload}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel = 3,AncestorType = TabControl}, Path=TabControl.SelectedItem}">
+                    <Viewbox Margin="16" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+                        <Canvas Name="Capa_1" Canvas.Left="0" Canvas.Top="0" Width="489.533" Height="489.533">
+                            <Canvas Name="g4">
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2" Fill="#FFFFFF">
+                                    <Path.Data>
+                                        <PathGeometry Figures="M268.175 488.161c98.2-11 176.9-89.5 188.1-187.7c14.7-128.4-85.1-237.7-210.2-239.1v-57.6c0-3.2-4-4.9-6.7-2.9   l-118.6 87.1c-2 1.5-2 4.4 0 5.9l118.6 87.1c2.7 2 6.7 0.2 6.7-2.9v-57.5c87.9 1.4 158.3 76.2 152.3 165.6   c-5.1 76.9-67.8 139.3-144.7 144.2c-81.5 5.2-150.8-53-163.2-130c-2.3-14.3-14.8-24.7-29.2-24.7c-17.9 0-31.9 15.9-29.1 33.6   C49.575 418.961 150.875 501.261 268.175 488.161z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+                </Button>
+                <Button Style="{DynamicResource MaterialDesignFloatingActionLightButton}" Command="{Binding Add}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel = 3,AncestorType = TabControl}, Path=TabControl.SelectedItem}">
+                    <Canvas Height="30"  Width="30">
+                        <Path Stroke="#FFFFFF" StrokeThickness="2">
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathGeometry.Figures>
+                                        <PathFigure StartPoint="6,14">
+                                            <LineSegment Point="22,14"/>
+                                        </PathFigure>
+                                        <PathFigure StartPoint="14,6">
+                                            <LineSegment Point="14,22"/>
+                                        </PathFigure>
+                                    </PathGeometry.Figures>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+                    </Canvas>
+                </Button>
+            </StackPanel>
         </Grid>
         <TabControl SelectedIndex="{Binding SelectedTab}">
             <TabItem Header="Income">
@@ -42,19 +57,57 @@
                         <DataGridTextColumn Binding="{Binding Operation.Currency.Ratio}" Header="Currency Ratio" />
                         <DataGridTextColumn Binding="{Binding Operation.Target.Name}" Header="Target Name" />
                         <DataGridTextColumn Binding="{Binding Operation.User.Name}" Header="User Name" />
-                        <DataGridTextColumn Binding="{Binding Operation.Comment}" Header="Operation Comment" />
+                        <DataGridTextColumn Binding="{Binding Operation.Comment}" Header="Operation Comment" Width="*"/>
                     </DataGrid.Columns>
                     <DataGrid.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Add" Command="{Binding Add}"/>
-                            <MenuItem Header="Edit" Command="{Binding Edit}"/>
-                            <MenuItem Header="Remove" Command="{Binding Remove}"/>
+                            <MenuItem Header="Add" Command="{Binding Add}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                            <MenuItem Header="Edit" Command="{Binding Edit}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                            <MenuItem Header="Remove" Command="{Binding Remove}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Expense"></TabItem>
-            <TabItem Header="Operation"></TabItem>
+            <TabItem Header="Expense">
+                <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding ExpenseTable}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding ID}" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Operation.Value}" Header="Operation Value" />
+                        <DataGridTextColumn Binding="{Binding Operation.Currency.Name}" Header="Currency Name" />
+                        <DataGridTextColumn Binding="{Binding Operation.Currency.Ratio}" Header="Currency Ratio" />
+                        <DataGridTextColumn Binding="{Binding Operation.Target.Name}" Header="Target Name" />
+                        <DataGridTextColumn Binding="{Binding Operation.User.Name}" Header="User Name" />
+                        <DataGridTextColumn Binding="{Binding Operation.Comment}" Header="Operation Comment" Width="*"/>
+                    </DataGrid.Columns>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Add" Command="{Binding Add}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                            <MenuItem Header="Edit" Command="{Binding Edit}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                            <MenuItem Header="Remove" Command="{Binding Remove}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Operation">
+                <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding OperationTable}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding ID}" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Value}" Header="Value" />
+                        <DataGridTextColumn Binding="{Binding Currency.Name}" Header="Currency Name" />
+                        <DataGridTextColumn Binding="{Binding Currency.Ratio}" Header="Currency Ratio" />
+                        <DataGridTextColumn Binding="{Binding Target.Name}" Header="Target Name" />
+                        <DataGridTextColumn Binding="{Binding User.Name}" Header="User Name" />
+                        <DataGridTextColumn Binding="{Binding Comment}" Header="Operation Comment" Width="*"/>
+                    </DataGrid.Columns>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Add" Command="{Binding Add}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                            <MenuItem Header="Edit" Command="{Binding Edit}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                            <MenuItem Header="Remove" Command="{Binding Remove}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </TabItem>
             <TabItem Header="Currency">
                 <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding CurrencyTable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <DataGrid.Columns>

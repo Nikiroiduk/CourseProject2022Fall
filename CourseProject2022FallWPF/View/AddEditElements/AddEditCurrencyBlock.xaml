@@ -8,13 +8,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <local:CurrencyConverter x:Key="CurrencyConverter"/>
+        <local:CurrencyValueConverter x:Key="CurrencyValueConverter"/>
+        <local:CurrencyNameConverter x:Key="CurrencyNameConverter"/>
     </UserControl.Resources>
     <Grid>
         <TextBox Grid.Row="0" Width="100" materialDesign:HintAssist.HelperText="Name"
-                    Text="{Binding CurrencyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding Currency.Name, Converter = {StaticResource CurrencyNameConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox Grid.Row="1" Width="100" materialDesign:HintAssist.HelperText="Name"
-                    Text="{Binding CurrencyRatio, Converter = {StaticResource CurrencyConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding Currency.Ratio, Converter = {StaticResource CurrencyValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />

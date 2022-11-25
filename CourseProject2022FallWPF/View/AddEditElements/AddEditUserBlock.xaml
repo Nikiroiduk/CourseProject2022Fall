@@ -9,6 +9,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <TextBox Width="100" materialDesign:HintAssist.HelperText="Name"
-                    Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding User.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>

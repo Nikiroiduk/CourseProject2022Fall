@@ -19,6 +19,8 @@ namespace CourseProject2022FallBL.Models
 
         private string _Name = "Undefined";
 
+        public bool isDefault => Name == "Undefined";
+
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

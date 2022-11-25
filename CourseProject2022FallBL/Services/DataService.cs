@@ -36,6 +36,14 @@ namespace CourseProject2022FallBL.Services
             return SqlServerCrud.RemoveUser(user);
         }
 
+        public static bool UpsertUser(User user)
+        {
+            if (GetUserID(user) == 0)
+                return AddUser(user);
+            else
+                return UpdateUser(user);
+        }
+
         #endregion
 
         #region Target
@@ -68,6 +76,14 @@ namespace CourseProject2022FallBL.Services
         public static bool RemoveTarget(Target target)
         {
             return SqlServerCrud.RemoveTarget(target);
+        }
+
+        public static bool UpsertTarget(Target target)
+        {
+            if (GetTargetID(target) == 0)
+                return AddTarget(target);
+            else
+                return UpdateTarget(target);
         }
 
         #endregion
@@ -104,6 +120,14 @@ namespace CourseProject2022FallBL.Services
             return SqlServerCrud.RemoveCurrency(currency);
         }
 
+        public static bool UpsertCurrency(Currency currency)
+        {
+            if (GetCurrencyID(currency) == 0)
+                return AddCurrency(currency);
+            else
+                return UpdateCurrency(currency);
+        }
+
         #endregion
 
         #region Operation
@@ -128,6 +152,24 @@ namespace CourseProject2022FallBL.Services
             return SqlServerCrud.GetOperationID(operation);
         }
 
+        public static bool UpdateOperation(Operation operation)
+        {
+            return SqlServerCrud.UpdateOperation(operation);
+        }
+
+        public static bool RemoveOperation(Operation operation)
+        {
+            return SqlServerCrud.RemoveOperation(operation);
+        }
+
+        public static bool UpsertOperation(Operation operation)
+        {
+            if (GetOperationID(operation) == 0)
+                return AddOperation(operation);
+            else
+                return UpdateOperation(operation);
+        }
+
         #endregion
 
         #region Income
@@ -150,6 +192,24 @@ namespace CourseProject2022FallBL.Services
         public static int GetIncomeID(Income income)
         {
             return SqlServerCrud.GetIncomeID(income);
+        }
+
+        public static bool RemoveIncome(Income income)
+        {
+            return SqlServerCrud.RemoveIncome(income);
+        }
+
+        public static bool UpdateIncome(Income income)
+        {
+            return SqlServerCrud.UpdateIncome(income);
+        }
+
+        public static bool UpsertIncome(Income income)
+        {
+            if (GetIncomeID(income) == 0)
+                return AddIncome(income);
+            else
+                return UpdateIncome(income);
         }
 
         #endregion

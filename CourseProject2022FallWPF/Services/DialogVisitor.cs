@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CourseProject2022FallWPF.Services
 {
@@ -14,16 +15,21 @@ namespace CourseProject2022FallWPF.Services
     {
         public object DynamicVisit(object data) => Visit((dynamic)data);
 
+        private bool Visit(string res)
+        {
+            ErrorWindow win = new();
+            ErrorWindowViewModel winVm = new(res);
+            win.DataContext = winVm;
+            return (bool)win.ShowDialog();
+        }
+
         private User Visit(User u)
         {
             AddEditWindow win = new();
             AddEditWindowViewModel winVm = new (u);
             win.DataContext = winVm;
             if ((bool)win.ShowDialog())
-            {
-                u.Name = winVm.UserName;
                 return u;
-            }
             return null;
         }
 
@@ -33,10 +39,7 @@ namespace CourseProject2022FallWPF.Services
             AddEditWindowViewModel winVm = new(t);
             win.DataContext = winVm;
             if ((bool)win.ShowDialog())
-            {
-                t.Name = winVm.TargetName;
                 return t;
-            }
             return null;
         }
 
@@ -46,11 +49,27 @@ namespace CourseProject2022FallWPF.Services
             AddEditWindowViewModel winVm = new(c);
             win.DataContext = winVm;
             if ((bool)win.ShowDialog())
-            {
-                c.Name = winVm.CurrencyName;
-                c.Ratio = winVm.CurrencyRatio;
                 return c;
-            }
+            return null;
+        }
+
+        private Operation Visit(Operation o)
+        {
+            AddEditWindow win = new();
+            AddEditWindowViewModel winVm = new(o);
+            win.DataContext = winVm;
+            if ((bool)win.ShowDialog())
+                return o;
+            return null;
+        }
+
+        private Income Visit(Income i)
+        {
+            AddEditWindow win = new();
+            AddEditWindowViewModel winVm = new(i);
+            win.DataContext = winVm;
+            if ((bool)win.ShowDialog())
+                return i;
             return null;
         }
     }

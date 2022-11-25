@@ -429,6 +429,7 @@ namespace CourseProject2022FallBL
                            "VALUES (@Value, @CurrencyID, @TargetID, @UserID, @Comment)";
                 using SqlCommand command = new(sql, connection);
                 command.Parameters.AddWithValue("@Value", operation.Value);
+                command.Parameters.AddWithValue("@Comment", operation.Comment);
 
                 if (GetCurrencyID(operation.Currency) == 0)
                     AddCurrency(operation.Currency);
@@ -441,7 +442,6 @@ namespace CourseProject2022FallBL
                 if (GetUserID(operation.User) == 0)
                     AddUser(operation.User);
                 command.Parameters.AddWithValue("@UserID", GetUserID(operation.User));
-                command.Parameters.AddWithValue("@Comment", operation.Comment);
                 connection.Open();
                 command.ExecuteNonQuery();
             }
@@ -541,6 +541,57 @@ namespace CourseProject2022FallBL
             return res;
         }
 
+        internal static bool UpdateOperation(Operation operation)
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = "UPDATE Operation SET Value = @Value, Comment = @Comment, UserID = @UserID, TargetID = @TargetID, CurrencyID = @CurrencyID WHERE ID = @ID";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@Value", operation.Value);
+                command.Parameters.AddWithValue("@Comment", operation.Comment);
+                command.Parameters.AddWithValue("@UserID", operation.User.ID);
+                command.Parameters.AddWithValue("@TargetID", operation.Target.ID);
+                command.Parameters.AddWithValue("@CurrencyID", operation.Currency.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        internal static bool RemoveOperation(Operation operation)
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = "DELETE FROM Operation WHERE ID = @ID AND Value = @Value " +
+                    "AND Comment = @Comment AND UserID = @UserID AND TargetID = @TargetID " +
+                    "AND CurrencyID = @CurrencyID";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@ID", operation.ID);
+                command.Parameters.AddWithValue("@Value", operation.Value);
+                command.Parameters.AddWithValue("@Comment", operation.Comment);
+                command.Parameters.AddWithValue("@UserID", operation.User.ID);
+                command.Parameters.AddWithValue("@TargetID", operation.Target.ID);
+                command.Parameters.AddWithValue("@CurrencyID", operation.Currency.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
 
         #region Income
@@ -550,8 +601,7 @@ namespace CourseProject2022FallBL
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);
-                var sql = $"INSERT INTO Income (OperationID)" +
-                           "VALUES (@OperationID)";
+                var sql = $"INSERT INTO Income (OperationID) VALUES (@OperationID)";
                 using SqlCommand command = new(sql, connection);
                 if (GetOperationID(income.Operation) == 0)
                     AddOperation(income.Operation);
@@ -633,6 +683,47 @@ namespace CourseProject2022FallBL
                 return res;
             }
             return res;
+        }
+
+        internal static bool UpdateIncome(Income income)
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = "UPDATE Income SET OperationID = @OperationID WHERE ID = @ID";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@OperationID", income.Operation.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        internal static bool RemoveIncome(Income income)
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = "DELETE FROM Income WHERE ID = @ID AND OperationID = @OperationID";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@OperationID", income.Operation.ID);
+                command.Parameters.AddWithValue("@ID", income.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         #endregion

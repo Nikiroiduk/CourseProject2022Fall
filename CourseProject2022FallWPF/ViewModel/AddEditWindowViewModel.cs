@@ -12,31 +12,47 @@ namespace CourseProject2022FallWPF.ViewModel
         {
             if (curObject is User user)
             {
-                UserName = user.Name;
+                User = user;
                 UserBlock = new AddEditUserBlock();
             }
             else if (curObject is Target target)
             {
-                TargetName = target.Name;
+                Target = target;
                 TargetBlock = new AddEditTargetBlock();
             }
             else if (curObject is Currency currency)
             {
-                CurrencyName = currency.Name;
-                CurrencyRatio = currency.Ratio;
-                TargetBlock = new AddEditCurrencyBlock();
+                Currency = currency;
+                CurrencyBlock = new AddEditCurrencyBlock();
+            }
+            else if (curObject is Operation operation)
+            {
+                Operation = operation;
+                User = operation.User;
+                Target = operation.Target;
+                Currency = operation.Currency;
+                OperationBlock = new AddEditOperationBlock();
+            }
+            else if (curObject is Income income)
+            {
+                Income = income;
+                Operation = income.Operation;
+                User = income.Operation.User;
+                Target = income.Operation.Target;
+                Currency = income.Operation.Currency;
+                IncomeBlock = new AddEditIncomeBlock();
             }
         }
 
         #region User
 
-        #region UserName
-        private string _UserName;
+        #region User
+        private User _User;
 
-        public string UserName
+        public User User
         {
-            get => _UserName;
-            set => Set(ref _UserName, value);
+            get => _User;
+            set => Set(ref _User, value);
         }
         #endregion
 
@@ -54,13 +70,13 @@ namespace CourseProject2022FallWPF.ViewModel
 
         #region Target
 
-        #region TargetName
-        private string _TargetName;
+        #region Target
+        private Target _Target;
 
-        public string TargetName
+        public Target Target
         {
-            get => _TargetName;
-            set => Set(ref _TargetName, value);
+            get => _Target;
+            set => Set(ref _Target, value);
         }
         #endregion
 
@@ -78,24 +94,13 @@ namespace CourseProject2022FallWPF.ViewModel
 
         #region Currency
 
-        #region CurrencyName
-        private string _CurrencyName;
+        #region Currency
+        private Currency _Currency;
 
-        public string CurrencyName
+        public Currency Currency
         {
-            get => _CurrencyName.Substring(0, 3).ToUpper();
-            set => Set(ref _CurrencyName, value);
-        }
-        #endregion
-
-
-        #region CurrencyRatio
-        private float _CurrencyRatio;
-
-        public float CurrencyRatio
-        {
-            get => _CurrencyRatio;
-            set => Set(ref _CurrencyRatio, value);
+            get => _Currency;
+            set => Set(ref _Currency, value);
         }
         #endregion
 
@@ -114,6 +119,54 @@ namespace CourseProject2022FallWPF.ViewModel
             int offset = Math.Min(charactersCount, text.Length);
             return text.Substring(0, offset);
         }
+
+        #endregion
+
+        #region Operation
+
+        #region Operation
+        private Operation _Operation;
+
+        public Operation Operation
+        {
+            get => _Operation;
+            set => Set(ref _Operation, value);
+        }
+        #endregion
+
+        #region OperationBlock
+        private UserControl _OperationBlock;
+
+        public UserControl OperationBlock
+        {
+            get => _OperationBlock;
+            set => Set(ref _OperationBlock, value);
+        }
+        #endregion
+
+        #endregion
+
+        #region Income
+
+        #region Income
+        private Income _Income;
+
+        public Income Income
+        {
+            get => _Income;
+            set => Set(ref _Income, value);
+        }
+        #endregion
+
+        #region IncomeBlock
+        private UserControl _IncomeBlock;
+
+        public UserControl IncomeBlock
+        {
+            get => _IncomeBlock;
+            set => Set(ref _IncomeBlock, value);
+        }
+        #endregion
 
         #endregion
     }

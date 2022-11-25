@@ -21,8 +21,10 @@ namespace CourseProject2022FallBL.Models
             set { _Name = value; NotifyPropertyChanged(); }
         }
 
-        private string _Name = "und";
+        private string _Name = "UND";
         private float _Ratio = 0.00f;
+
+        public bool isDefault => Name == "UND" && Ratio == 0.00f;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {

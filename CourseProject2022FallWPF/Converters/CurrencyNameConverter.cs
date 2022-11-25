@@ -1,9 +1,14 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace CourseProject2022FallWPF.Converters
 {
-    public class CurrencyConverter : IValueConverter
+    internal class CurrencyNameConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -12,14 +17,9 @@ namespace CourseProject2022FallWPF.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            float returnedValue;
-
-            if (float.TryParse((string)value, out returnedValue))
-            {
-                return returnedValue;
-            }
-
-            return 0;
+            if ($"{value}".IsNullOrEmpty()) return "";
+            if ($"{value}".Length < 3) return $"{value}".ToUpper();
+            return $"{value}"[..3].ToUpper();
         }
     }
 }
