@@ -7,8 +7,14 @@
              xmlns:local="clr-namespace:CourseProject2022FallWPF.View.AddEditElements"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBox Width="100" materialDesign:HintAssist.HelperText="Name"
-                     Text="{Binding Target.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+    <Grid Margin="4, 16, 4, 16">
+        <ComboBox IsEditable="True"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Name" 
+                  ItemsSource="{Binding TargetsList}"
+                  Text="{Binding Target.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Padding="4"
+                  materialDesign:HintAssist.HelperText="Target name">
+        </ComboBox>
     </Grid>
 </UserControl>

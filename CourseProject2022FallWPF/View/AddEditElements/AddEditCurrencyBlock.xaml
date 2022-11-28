@@ -10,15 +10,58 @@
     <UserControl.Resources>
         <local:CurrencyValueConverter x:Key="CurrencyValueConverter"/>
         <local:CurrencyNameConverter x:Key="CurrencyNameConverter"/>
+        <Style x:Key="HideGrid" TargetType="Grid">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=checkBox, Path=IsChecked}"
+                        Value="True">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=checkBox, Path=IsChecked}"
+                        Value="False">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ShowGrid" TargetType="Grid">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=checkBox, Path=IsChecked}"
+                        Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=checkBox, Path=IsChecked}"
+                        Value="False">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-    <Grid>
-        <TextBox Grid.Row="0" Width="100" materialDesign:HintAssist.HelperText="Name"
-                    Text="{Binding Currency.Name, Converter = {StaticResource CurrencyNameConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox Grid.Row="1" Width="100" materialDesign:HintAssist.HelperText="Name"
-                    Text="{Binding Currency.Ratio, Converter = {StaticResource CurrencyValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+    <Grid Margin="4, 16, 4, 16">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="90*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid Style="{StaticResource HideGrid}">
+                <ComboBox DisplayMemberPath="Name" 
+                          ItemsSource="{Binding CurrenciesList, Mode=OneWay}"
+                          SelectedValue="{Binding Currency.Ratio, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Text="{Binding Currency.Name, Mode=TwoWay}"
+                          SelectedValuePath="Ratio"                          
+                          Padding="4"
+                          materialDesign:HintAssist.HelperText="Currency">
+                </ComboBox>
+            </Grid>
+            <Grid Style="{StaticResource ShowGrid}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Margin="0, 0, 2, 0" Padding="4" Grid.Column="0" Width="auto" materialDesign:HintAssist.HelperText="Currency name"
+                            Text="{Binding Currency.Name, Converter = {StaticResource CurrencyNameConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Margin="2, 0, 0, 0" Padding="4" Grid.Column="1" Width="auto" materialDesign:HintAssist.HelperText="Currency ratio(USD)"
+                            Text="{Binding Currency.Ratio, Converter = {StaticResource CurrencyValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+        </Grid>
+        <CheckBox x:Name="checkBox" Content="Edit" Grid.Column="1"/>
     </Grid>
 </UserControl>

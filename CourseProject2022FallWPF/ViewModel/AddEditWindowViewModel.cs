@@ -1,7 +1,10 @@
 ﻿using CourseProject2022FallBL.Models;
+using CourseProject2022FallBL.Services;
 using CourseProject2022FallWPF.View.AddEditElements;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Controls;
 
 namespace CourseProject2022FallWPF.ViewModel
@@ -42,6 +45,15 @@ namespace CourseProject2022FallWPF.ViewModel
                 Currency = income.Operation.Currency;
                 IncomeBlock = new AddEditIncomeBlock();
             }
+            else if (curObject is Expense expense)
+            {
+                Expense = expense;
+                Operation = expense.Operation;
+                User = expense.Operation.User;
+                Target = expense.Operation.Target;
+                Currency = expense.Operation.Currency;
+                ExpenseBlock = new AddEditIncomeBlock();
+            }
         }
 
         #region User
@@ -53,6 +65,16 @@ namespace CourseProject2022FallWPF.ViewModel
         {
             get => _User;
             set => Set(ref _User, value);
+        }
+        #endregion
+
+        #region UsersList
+        private List<User> _UsersList = DataService.GetUsers();
+
+        public List<User> UsersList
+        {
+            get => _UsersList;
+            set => Set(ref _UsersList, value);
         }
         #endregion
 
@@ -80,6 +102,16 @@ namespace CourseProject2022FallWPF.ViewModel
         }
         #endregion
 
+        #region TargetsList
+        private List<Target> _TargetsList = DataService.GetTargets();
+
+        public List<Target> TargetsList
+        {
+            get => _TargetsList;
+            set => Set(ref _TargetsList, value);
+        }
+        #endregion
+
         #region TargetBlock
         private UserControl _TargetBlock;
 
@@ -104,6 +136,16 @@ namespace CourseProject2022FallWPF.ViewModel
         }
         #endregion
 
+        #region CurrenciesList
+        private List<Currency> _CurrenciesList = DataService.GetCurrencies();
+
+        public List<Currency> CurrenciesList
+        {
+            get => _CurrenciesList;
+            set => Set(ref _CurrenciesList, value);
+        }
+        #endregion
+
         #region CurrencyBlock
         private UserControl _CurrencyBlock;
 
@@ -113,12 +155,6 @@ namespace CourseProject2022FallWPF.ViewModel
             set => Set(ref _CurrencyBlock, value);
         }
         #endregion
-
-        private static string getFirstCharacters(string text, int charactersCount)
-        {
-            int offset = Math.Min(charactersCount, text.Length);
-            return text.Substring(0, offset);
-        }
 
         #endregion
 
@@ -165,6 +201,30 @@ namespace CourseProject2022FallWPF.ViewModel
         {
             get => _IncomeBlock;
             set => Set(ref _IncomeBlock, value);
+        }
+        #endregion
+
+        #endregion
+
+        #region Expense
+
+        #region Expense
+        private Expense _Expense;
+
+        public Expense Expense
+        {
+            get => _Expense;
+            set => Set(ref _Expense, value);
+        }
+        #endregion
+
+        #region ExpenseBlock
+        private UserControl _ExpenseBlock;
+
+        public UserControl ExpenseBlock
+        {
+            get => _ExpenseBlock;
+            set => Set(ref _ExpenseBlock, value);
         }
         #endregion
 

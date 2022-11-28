@@ -12,9 +12,9 @@
         <local:CurrencyValueConverter x:Key="CurrencyValueConverter"/>
     </UserControl.Resources>
     <Grid>
-        <Grid Grid.Row="0">
-            <TextBox Grid.Column="0" Text="{Binding Operation.Value, Converter = {StaticResource CurrencyValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Grid.Column="1" Text="{Binding Operation.Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid Grid.Row="0" Margin="4, 16, 4, 16">
+            <TextBox Grid.Column="0" Text="{Binding Operation.Value, Converter = {StaticResource CurrencyValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.HelperText="Value"/>
+            <TextBox Grid.Column="1" Text="{Binding Operation.Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.HelperText="Comment"/>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />

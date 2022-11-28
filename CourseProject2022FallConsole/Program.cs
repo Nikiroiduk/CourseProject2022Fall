@@ -95,17 +95,3 @@ using CourseProject2022FallBL.Services;
 //        Currency = new Currency { Name = "eur", Ratio = 1.03f }
 //    }
 //}));
-
-
-
-Console.WriteLine(DataService.UpsertIncome(new Income
-{
-    Operation = new Operation
-    {
-        Value = 1489,
-        Comment = "value",
-        User = new User { ID = 1, Name = "Niki" },
-        Target = new Target { ID = 26, Name = "Drugs" },
-        Currency = new Currency { ID = 6, Name = "rub", Ratio = 0.017f }
-    }
-}));

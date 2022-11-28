@@ -236,6 +236,24 @@ namespace CourseProject2022FallBL.Services
             return SqlServerCrud.GetExpenseID(expense);
         }
 
+        public static bool RemoveExpense(Expense expense)
+        {
+            return SqlServerCrud.RemoveExpense(expense);
+        }
+
+        public static bool UpdateExpense(Expense expense)
+        {
+            return SqlServerCrud.UpdateExpense(expense);
+        }
+
+        public static bool UpsertExpense(Expense expense)
+        {
+            if (GetExpenseID(expense) == 0)
+                return AddExpense(expense);
+            else
+                return UpdateExpense(expense);
+        }
+
         #endregion
 
     }

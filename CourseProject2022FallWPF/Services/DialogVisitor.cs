@@ -30,7 +30,7 @@ namespace CourseProject2022FallWPF.Services
             win.DataContext = winVm;
             if ((bool)win.ShowDialog())
                 return u;
-            return null;
+            return new User();
         }
 
         private Target Visit(Target t)
@@ -40,7 +40,7 @@ namespace CourseProject2022FallWPF.Services
             win.DataContext = winVm;
             if ((bool)win.ShowDialog())
                 return t;
-            return null;
+            return new Target();
         }
 
         private Currency Visit(Currency c)
@@ -50,7 +50,7 @@ namespace CourseProject2022FallWPF.Services
             win.DataContext = winVm;
             if ((bool)win.ShowDialog())
                 return c;
-            return null;
+            return new Currency();
         }
 
         private Operation Visit(Operation o)
@@ -60,7 +60,7 @@ namespace CourseProject2022FallWPF.Services
             win.DataContext = winVm;
             if ((bool)win.ShowDialog())
                 return o;
-            return null;
+            return new Operation();
         }
 
         private Income Visit(Income i)
@@ -70,7 +70,17 @@ namespace CourseProject2022FallWPF.Services
             win.DataContext = winVm;
             if ((bool)win.ShowDialog())
                 return i;
-            return null;
+            return new Income();
+        }
+
+        private Expense Visit(Expense e)
+        {
+            AddEditWindow win = new();
+            AddEditWindowViewModel winVm = new(e);
+            win.DataContext = winVm;
+            if ((bool)win.ShowDialog())
+                return e;
+            return new Expense();
         }
     }
 }

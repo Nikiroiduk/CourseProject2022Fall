@@ -548,12 +548,17 @@ namespace CourseProject2022FallBL
                 using SqlConnection connection = new(builder.ConnectionString);
                 var sql = "UPDATE Operation SET Value = @Value, Comment = @Comment, UserID = @UserID, TargetID = @TargetID, CurrencyID = @CurrencyID WHERE ID = @ID";
 
+
                 using SqlCommand command = new(sql, connection);
+                UpdateCurrency(operation.Currency);
+                command.Parameters.AddWithValue("@CurrencyID", operation.Currency.ID);
+                UpdateTarget(operation.Target);
+                command.Parameters.AddWithValue("@TargetID", operation.Target.ID);
+                UpdateUser(operation.User);
+                command.Parameters.AddWithValue("@UserID", operation.User.ID);
                 command.Parameters.AddWithValue("@Value", operation.Value);
                 command.Parameters.AddWithValue("@Comment", operation.Comment);
-                command.Parameters.AddWithValue("@UserID", operation.User.ID);
-                command.Parameters.AddWithValue("@TargetID", operation.Target.ID);
-                command.Parameters.AddWithValue("@CurrencyID", operation.Currency.ID);
+                command.Parameters.AddWithValue("@ID", operation.ID);
                 connection.Open();
                 command.ExecuteNonQuery();
             }
@@ -693,7 +698,9 @@ namespace CourseProject2022FallBL
                 var sql = "UPDATE Income SET OperationID = @OperationID WHERE ID = @ID";
 
                 using SqlCommand command = new(sql, connection);
+                UpdateOperation(income.Operation);
                 command.Parameters.AddWithValue("@OperationID", income.Operation.ID);
+                command.Parameters.AddWithValue("@ID", income.ID);
                 connection.Open();
                 command.ExecuteNonQuery();
             }
@@ -818,6 +825,49 @@ namespace CourseProject2022FallBL
                 return res;
             }
             return res;
+        }
+
+        internal static bool UpdateExpense(Expense expense)
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = "UPDATE Expense SET OperationID = @OperationID WHERE ID = @ID";
+
+                using SqlCommand command = new(sql, connection);
+                UpdateOperation(expense.Operation);
+                command.Parameters.AddWithValue("@OperationID", expense.Operation.ID);
+                command.Parameters.AddWithValue("@ID", expense.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        internal static bool RemoveExpense(Expense expense)
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = "DELETE FROM Expense WHERE ID = @ID AND OperationID = @OperationID";
+
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@OperationID", expense.Operation.ID);
+                command.Parameters.AddWithValue("@ID", expense.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         #endregion

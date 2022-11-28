@@ -1,11 +1,4 @@
-﻿using CourseProject2022FallBL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CourseProject2022FallWPF.ViewModel
+﻿namespace CourseProject2022FallWPF.ViewModel
 {
     public class ErrorWindowViewModel : ViewModel
     {

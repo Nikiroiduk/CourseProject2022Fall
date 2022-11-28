@@ -1,5 +1,6 @@
 ﻿//using Azure;
 //using Azure;
+//using Azure;
 using CourseProject2022FallBL.Models;
 using CourseProject2022FallBL.Services;
 using CourseProject2022FallWPF.Model.Commands;
@@ -17,6 +18,7 @@ namespace CourseProject2022FallWPF.ViewModel
         private readonly DialogVisitor Visitor = new();
 
         private string DeleteErrorMessage(string name) => $"An error occurred when deleting a {name}";
+        private string EditErrorMessage(string name) => $"An error occurred when editing a {name}";
 
         public RawViewViewModel()
         {
@@ -169,8 +171,8 @@ namespace CourseProject2022FallWPF.ViewModel
                 var operation = (Operation)Visitor.DynamicVisit(new Operation());
                 if (operation.isDefault || operation == null)
                     return;
+
                 DataService.UpsertOperation(operation);
-                // TODO: Meet Konstantin
                 operation.User.ID = DataService.GetUserID(operation.User);
                 operation.Target.ID = DataService.GetTargetID(operation.Target);
                 operation.Currency.ID = DataService.GetCurrencyID(operation.Currency);
@@ -192,11 +194,13 @@ namespace CourseProject2022FallWPF.ViewModel
                 var income = (Income)Visitor.DynamicVisit(new Income());
                 if (income.isDefault || income == null)
                     return;
-                DataService.UpsertIncome(income);
+
+                DataService.UpsertOperation(income.Operation);
                 income.Operation.User.ID = DataService.GetUserID(income.Operation.User);
                 income.Operation.Target.ID = DataService.GetTargetID(income.Operation.Target);
                 income.Operation.Currency.ID = DataService.GetCurrencyID(income.Operation.Currency);
                 income.Operation.ID = DataService.GetOperationID(income.Operation);
+                DataService.UpsertIncome(income);
                 income.ID = DataService.GetIncomeID(income);
                 if (IncomeTable.Where(i => i.ID == income.ID).IsNullOrEmpty())
                     IncomeTable.Add(income);
@@ -212,7 +216,28 @@ namespace CourseProject2022FallWPF.ViewModel
             }
             else if (SelectedTab == SelectedTab.Expense)
             {
+                var expense = (Expense)Visitor.DynamicVisit(new Expense());
+                if (expense.isDefault || expense == null)
+                    return;
 
+                DataService.UpsertOperation(expense.Operation);
+                expense.Operation.User.ID = DataService.GetUserID(expense.Operation.User);
+                expense.Operation.Target.ID = DataService.GetTargetID(expense.Operation.Target);
+                expense.Operation.Currency.ID = DataService.GetCurrencyID(expense.Operation.Currency);
+                expense.Operation.ID = DataService.GetOperationID(expense.Operation);
+                DataService.UpsertExpense(expense);
+                expense.ID = DataService.GetExpenseID(expense);
+                if (ExpenseTable.Where(e => e.ID == expense.ID).IsNullOrEmpty())
+                    ExpenseTable.Add(expense);
+                else
+                    foreach (var e in IncomeTable.Where(e => e.ID == expense.ID))
+                    {
+                        e.Operation.Value = expense.Operation.Value;
+                        e.Operation.Comment = expense.Operation.Comment;
+                        e.Operation.Target = expense.Operation.Target;
+                        e.Operation.User = expense.Operation.User;
+                        e.Operation.Currency = expense.Operation.Currency;
+                    }
             }
         }
         #endregion
@@ -227,7 +252,7 @@ namespace CourseProject2022FallWPF.ViewModel
             {
                 var user = p as User;
                 user = (User)Visitor.DynamicVisit(user);
-                if (user.isDefault || user == null)
+                if (user.isDefault)
                     return;
                 DataService.UpdateUser(user);
                 foreach (var u in UserTable.Where(u => u.ID == user.ID))
@@ -239,7 +264,7 @@ namespace CourseProject2022FallWPF.ViewModel
             {
                 var target = p as Target;
                 target = (Target)Visitor.DynamicVisit(target);
-                if (target.isDefault || target == null)
+                if (target.isDefault)
                     return;
                 DataService.UpdateTarget(target);
                 foreach (var t in TargetTable.Where(t => t.ID == target.ID))
@@ -251,7 +276,7 @@ namespace CourseProject2022FallWPF.ViewModel
             {
                 var currency = p as Currency;
                 currency = (Currency)Visitor.DynamicVisit(currency);
-                if (currency.isDefault || currency == null)
+                if (currency.isDefault)
                     return;
                 DataService.UpdateCurrency(currency);
                 foreach (var c in CurrencyTable.Where(с => с.ID == currency.ID))
@@ -264,7 +289,7 @@ namespace CourseProject2022FallWPF.ViewModel
             {
                 var operation = p as Operation;
                 operation = (Operation)Visitor.DynamicVisit(operation);
-                if (operation.isDefault || operation == null)
+                if (operation.isDefault)
                     return;
                 DataService.UpdateOperation(operation);
                 foreach (var o in OperationTable.Where(o => o.ID == operation.ID))
@@ -280,7 +305,7 @@ namespace CourseProject2022FallWPF.ViewModel
             {
                 var income = p as Income;
                 income = (Income)Visitor.DynamicVisit(income);
-                if (income.isDefault || income == null)
+                if (income.isDefault)
                     return;
                 DataService.UpdateIncome(income);
                 foreach (var i in IncomeTable.Where(i => i.ID == income.ID))
@@ -294,7 +319,19 @@ namespace CourseProject2022FallWPF.ViewModel
             }
             else if (SelectedTab == SelectedTab.Expense)
             {
-
+                var expense = p as Expense;
+                expense = (Expense)Visitor.DynamicVisit(expense);
+                if (expense.isDefault)
+                    return;
+                DataService.UpdateExpense(expense);
+                foreach (var e in ExpenseTable.Where(e => e.ID == expense.ID))
+                {
+                    e.Operation.Value = expense.Operation.Value;
+                    e.Operation.Comment = expense.Operation.Comment;
+                    e.Operation.Target = expense.Operation.Target;
+                    e.Operation.User = expense.Operation.User;
+                    e.Operation.Currency = expense.Operation.Currency;
+                }
             }
         }
         #endregion
@@ -347,7 +384,11 @@ namespace CourseProject2022FallWPF.ViewModel
             }
             else if (SelectedTab == SelectedTab.Expense)
             {
-
+                var expense = p as Expense;
+                if (DataService.RemoveExpense(expense))
+                    ExpenseTable.Remove(expense);
+                else
+                    Visitor.DynamicVisit(DeleteErrorMessage("expense"));
             }
         }
         #endregion

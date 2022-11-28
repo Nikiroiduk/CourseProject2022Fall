@@ -21,7 +21,7 @@ namespace CourseProject2022FallBL.Models
         public string _Comment = "Undefined";
         public float _Value = 0f;
 
-        public bool isDefault => _Comment == "Undefined" && _Value == 0f && Currency.isDefault && Target.isDefault && User.isDefault;
+        public bool isDefault => _Comment == "Undefined" || _Value == 0f || Currency.isDefault || Target.isDefault || User.isDefault;
 
 
         //public event PropertyChangedEventHandler? PropertyChanged
