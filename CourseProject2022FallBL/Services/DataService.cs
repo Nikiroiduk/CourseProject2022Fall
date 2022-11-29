@@ -1,4 +1,7 @@
 ﻿using CourseProject2022FallBL.Models;
+using CourseProject2022FallBL.SqlServer;
+using Action = CourseProject2022FallBL.Models.Action;
+
 
 namespace CourseProject2022FallBL.Services
 {
@@ -252,6 +255,15 @@ namespace CourseProject2022FallBL.Services
                 return AddExpense(expense);
             else
                 return UpdateExpense(expense);
+        }
+
+        #endregion
+
+        #region Action
+
+        public static List<Action> GetActions()
+        {
+            return SqlServerCrud.GetActions();
         }
 
         #endregion

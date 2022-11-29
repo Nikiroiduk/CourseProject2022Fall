@@ -3,12 +3,115 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:CourseProject2022FallWPF.View"
+      xmlns:local="clr-namespace:CourseProject2022FallWPF.ViewModel"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:converters="clr-namespace:CourseProject2022FallWPF.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="FormattedView">
-
-    <Grid>
-        
+    <Page.DataContext>
+        <local:FormattedViewViewModel/>
+    </Page.DataContext>
+    <Page.Resources>
+        <converters:ActionTypeConverter x:Key="TypeConverter"/>
+        <converters:ActionTypeImageConverter x:Key="TypeImageConverter"/>
+        <Style x:Key="AllBtn" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+            <Setter Property="BorderBrush" Value="#9D9D9D"/>
+            <Setter Property="Foreground" Value="#9D9D9D"/>
+            <Setter Property="Background" Value="#009D9D9D"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsAllSelected}"
+                        Value="True">
+                    <Setter Property="Background" Value="#9D9D9D"/>
+                    <Setter Property="Foreground" Value="#FFEDEDED"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="IncomeBtn" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+            <Setter Property="BorderBrush" Value="#92B4EC"/>
+            <Setter Property="Foreground" Value="#92B4EC"/>
+            <Setter Property="Background" Value="#0092B4EC"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsIncomeSelected}"
+                        Value="True">
+                    <Setter Property="Background" Value="#92B4EC"/>
+                    <Setter Property="Foreground" Value="#FFEEF5FF"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ExpenseBtn" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+            <Setter Property="BorderBrush" Value="#F47C7C"/>
+            <Setter Property="Foreground" Value="#F47C7C"/>
+            <Setter Property="Background" Value="#00F47C7C"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsExpenseSelected}"
+                        Value="True">
+                    <Setter Property="Background" Value="#F47C7C"/>
+                    <Setter Property="Foreground" Value="#FFFFE3E3"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="80*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button Height="40" Width="90" Margin="0, 0, 10, 0"  x:Name="All" Content="All" Style="{StaticResource AllBtn}" Command="{Binding TypeSelected}" CommandParameter="{Binding ElementName=All, Path=Name}"/>
+            <Button Height="40" Width="90" Margin="10, 0, 10, 0" x:Name="Income" Content="Income" Style="{StaticResource IncomeBtn}" Command="{Binding TypeSelected}" CommandParameter="{Binding ElementName=Income, Path=Name}"/>
+            <Button Height="40" Width="90" Margin="10, 0, 0, 0" x:Name="Expense" Content="Expense" Style="{StaticResource ExpenseBtn}" Command="{Binding TypeSelected}" CommandParameter="{Binding ElementName=Expense, Path=Name}"/>
+        </StackPanel>
+        <ListView materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
+                  ScrollViewer.CanContentScroll="False"
+                  SelectionMode="Single" 
+                  Grid.Row="1" 
+                  ItemsSource="{Binding ObservableItems}">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add"
+                            Command="{Binding AddItem}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                    <MenuItem Header="Edit"
+                            Command="{Binding EditItem}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                    <MenuItem Header="Remove"
+                            Command="{Binding RemoveItem}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="16*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Height="40" Width="40" VerticalAlignment="Center">
+                            <Ellipse.Fill>
+                                <ImageBrush Stretch="Uniform"  ImageSource="{Binding isIncome, Converter={StaticResource TypeImageConverter}}"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <StackPanel Grid.Column="1" Orientation="Vertical">
+                            <Label Grid.Column="1" Content="{Binding Operation.Comment}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding Operation.User.Name}" Foreground="#A0000000"/>
+                                <Label Content="{Binding Operation.Target.Name}" Foreground="#A0000000"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <Label Content="{Binding Operation.Value}"/>
+                            <Label Content="{Binding Operation.Currency.Name}"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </Grid>
 </Page>

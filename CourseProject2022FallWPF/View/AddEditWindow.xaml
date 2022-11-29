@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseProject2022FallWPF.ViewModel"
-        xmlns:blocks="clr-namespace:CourseProject2022FallWPF.View.AddEditElements"
         mc:Ignorable="d"
         x:Name="AddEditWindowName"
         WindowStartupLocation="CenterOwner"
+        ResizeMode="CanMinimize"
         Title="AddEditWindow" Height="450" Width="800">
     <Window.DataContext>
         <local:MainWindowViewModel/>
@@ -15,6 +15,7 @@
     <DockPanel>
         <ScrollViewer DockPanel.Dock="Top">
             <StackPanel Orientation="Vertical">
+                <ContentControl Content="{Binding ActionBlock}"/>
                 <ContentControl Content="{Binding IncomeBlock}"/>
                 <ContentControl Content="{Binding ExpenseBlock}"/>
                 <ContentControl Content="{Binding OperationBlock}"/>
@@ -23,11 +24,9 @@
                 <ContentControl Content="{Binding UserBlock}"/>
             </StackPanel>
         </ScrollViewer>
-        <!--<StackPanel DockPanel.Dock="Top" Orientation="Vertical">
-        </StackPanel><ContentControl Content="{Binding meh}"/>-->
-        <Grid DockPanel.Dock="Bottom">
-            <Button x:Name="Apply" Content="Apply" Grid.Column="0" Click="Apply_Click"/>
-            <Button x:Name="Discard" Content="Discard" Grid.Column="1" Click="Discard_Click"/>
+        <Grid Margin="4, 16, 4, 16" DockPanel.Dock="Bottom">
+            <Button Margin="0, 0, 10, 0" x:Name="Apply" Content="Apply" Grid.Column="0" Click="Apply_Click"/>
+            <Button Margin="10, 0, 0, 0" x:Name="Discard" Content="Discard" Grid.Column="1" Click="Discard_Click"/>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

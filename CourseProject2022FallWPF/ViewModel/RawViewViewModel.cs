@@ -1,7 +1,4 @@
-﻿//using Azure;
-//using Azure;
-//using Azure;
-using CourseProject2022FallBL.Models;
+﻿using CourseProject2022FallBL.Models;
 using CourseProject2022FallBL.Services;
 using CourseProject2022FallWPF.Model.Commands;
 using CourseProject2022FallWPF.Model.Enum;
@@ -17,8 +14,8 @@ namespace CourseProject2022FallWPF.ViewModel
     {
         private readonly DialogVisitor Visitor = new();
 
-        private string DeleteErrorMessage(string name) => $"An error occurred when deleting a {name}";
-        private string EditErrorMessage(string name) => $"An error occurred when editing a {name}";
+        private static string DeleteErrorMessage(string name) => $"An error occurred when deleting a {name}";
+        private static string EditErrorMessage(string name) => $"An error occurred when editing a {name}";
 
         public RawViewViewModel()
         {

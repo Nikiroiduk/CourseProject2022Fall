@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using CourseProject2022FallBL.Models;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +9,18 @@ using System.Windows.Data;
 
 namespace CourseProject2022FallWPF.Converters
 {
-    public class CurrencyNameConverter : IValueConverter
+    public class ActionTypeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return $"{value}";
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if ($"{value}".IsNullOrEmpty()) return "";
-            if ($"{value}".Length < 3) return $"{value}".ToUpper();
-            return $"{value}"[..3].ToUpper();
+            if (value is Income) return "Income";
+            if (value is Expense) return "Expense";
+            return value;
         }
     }
 }

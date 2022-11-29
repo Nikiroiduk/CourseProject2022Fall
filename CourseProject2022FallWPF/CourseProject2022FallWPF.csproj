@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\expense.png" />
+    <None Remove="Resources\income.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CourseProject2022FallBL\CourseProject2022FallBL.csproj" />
   </ItemGroup>
 
@@ -17,6 +22,11 @@
 
   <ItemGroup>
     <Folder Include="Model\Dictionary\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\expense.png" />
+    <Resource Include="Resources\income.png" />
   </ItemGroup>
 
 </Project>

@@ -3,12 +3,13 @@ using System.ComponentModel;
 
 namespace CourseProject2022FallBL.Models
 {
-    public class Income : INotifyPropertyChanged
+    public class Income : Action, INotifyPropertyChanged
     {
         public int ID { get; set; }
         public Operation Operation { get; set; } = new Operation();
 
         public bool isDefault => Operation.isDefault;
+        public bool isIncome => true;
 
         public event PropertyChangedEventHandler? PropertyChanged
         {

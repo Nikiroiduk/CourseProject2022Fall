@@ -2,12 +2,13 @@
 
 namespace CourseProject2022FallBL.Models
 {
-    public class Expense : INotifyPropertyChanged
+    public class Expense : Action, INotifyPropertyChanged
     {
         public int ID { get; set; }
         public Operation Operation { get; set; } = new Operation();
 
         public bool isDefault => Operation.isDefault;
+        public bool isIncome => false;
 
         public event PropertyChangedEventHandler? PropertyChanged
         {

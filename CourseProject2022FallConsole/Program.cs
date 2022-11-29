@@ -2,6 +2,8 @@
 using CourseProject2022FallBL.Models;
 using CourseProject2022FallBL.Services;
 
+Console.WriteLine();
+
 //Console.WriteLine(DataService.AddUser(user: new User{ Name = "TestUserName" }));
 
 //Console.WriteLine(DataService.AddTarget(target: new Target { Name = "TargetTestName" }));

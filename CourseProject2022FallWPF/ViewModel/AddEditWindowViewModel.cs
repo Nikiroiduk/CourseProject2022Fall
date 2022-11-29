@@ -1,11 +1,17 @@
 ﻿using CourseProject2022FallBL.Models;
 using CourseProject2022FallBL.Services;
+using CourseProject2022FallWPF.Model.Commands;
 using CourseProject2022FallWPF.View.AddEditElements;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Interop;
+using Action = CourseProject2022FallBL.Models.Action;
+
 
 namespace CourseProject2022FallWPF.ViewModel
 {
@@ -13,6 +19,8 @@ namespace CourseProject2022FallWPF.ViewModel
     {
         public AddEditWindowViewModel(object curObject)
         {
+            TypeSelected = new LambdaCommand(OnTypeSelected, CanTypeSelected);
+
             if (curObject is User user)
             {
                 User = user;
@@ -226,6 +234,52 @@ namespace CourseProject2022FallWPF.ViewModel
             get => _ExpenseBlock;
             set => Set(ref _ExpenseBlock, value);
         }
+        #endregion
+
+        #endregion
+
+        #region Action
+
+        #region Action
+        private Action _Action;
+
+        public Action Action
+        {
+            get => _Action;
+            set => Set(ref _Action, value);
+        }
+        #endregion
+
+        #region IsIncome
+        private bool _IsIncome = true;
+
+        public bool IsIncome
+        {
+            get => _IsIncome;
+            set => Set(ref _IsIncome, value);
+        }
+        #endregion
+
+        #region ActionBlock
+        private UserControl _ActionBlock;
+
+        public UserControl ActionBlock
+        {
+            get => _ActionBlock;
+            set => Set(ref _ActionBlock, value);
+        }
+        #endregion
+
+        #region TypeSelected
+
+        public ICommand TypeSelected { get; }
+
+        private bool CanTypeSelected(object p) => true;
+        private void OnTypeSelected(object p)
+        {
+            IsIncome = !IsIncome;
+        }
+
         #endregion
 
         #endregion

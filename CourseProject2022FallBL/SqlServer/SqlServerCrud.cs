@@ -2,16 +2,19 @@
 using Microsoft.Data.SqlClient;
 
 using Operation = CourseProject2022FallBL.Models.Operation;
+using Action = CourseProject2022FallBL.Models.Action;
 
-namespace CourseProject2022FallBL
+
+namespace CourseProject2022FallBL.SqlServer
 {
     internal static class SqlServerCrud
     {
-        private static SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder{ 
-            DataSource = "DESKTOP-9922B5A", 
-            InitialCatalog = "Finances", 
-            IntegratedSecurity = true, 
-            Encrypt = false, 
+        private static SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
+        {
+            DataSource = "DESKTOP-9922B5A",
+            InitialCatalog = "Finances",
+            IntegratedSecurity = true,
+            Encrypt = false,
         };
 
         #region User
@@ -289,7 +292,6 @@ namespace CourseProject2022FallBL
                 using SqlConnection connection = new(builder.ConnectionString);
                 var sql = $"INSERT INTO Currency (Name, Ratio) VALUES (@Name, @Ratio)";
                 using SqlCommand command = new(sql, connection);
-                // TODO: Name should be 3 or less symbols length
                 command.Parameters.AddWithValue("@Name", currency.Name.ToUpper());
                 command.Parameters.AddWithValue("@Ratio", currency.Ratio);
                 connection.Open();
@@ -868,6 +870,25 @@ namespace CourseProject2022FallBL
             }
 
             return true;
+        }
+
+        #endregion
+
+        #region Action
+
+        internal static List<Action> GetActions()
+        {
+            var res = new List<Action>();
+            try
+            {
+                res.AddRange(GetIncomes());
+                res.AddRange(GetExpenses());
+            }
+            catch (Exception)
+            {
+                return new List<Action>();
+            }
+            return res;
         }
 
         #endregion
