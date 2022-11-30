@@ -17,6 +17,11 @@
                 <MenuItem Header="Raw" Command="{Binding RawView}"/>
                 <MenuItem Header="Formatted" Command="{Binding FormattedView}"/>
             </MenuItem>
+            <MenuItem Header="Report">
+                <MenuItem Header="User" Command="{Binding UserReport}"/>
+                <MenuItem Header="Target" Command="{Binding TargetReport}"/>
+                <MenuItem Header="Currency" Command="{Binding CurrencyReport}"/>
+            </MenuItem>
         </Menu>
         <Frame DockPanel.Dock="Bottom" Content="{Binding ActivePage}" NavigationUIVisibility="Hidden"></Frame>
     </DockPanel>

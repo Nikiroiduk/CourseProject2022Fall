@@ -148,6 +148,24 @@ namespace CourseProject2022FallBL.SqlServer
             return true;
         }
 
+        internal static bool RemoveAllDataInUserTable()
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = $"DELETE FROM [User]";
+                using SqlCommand command = new(sql, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
 
         #region Target
@@ -270,6 +288,24 @@ namespace CourseProject2022FallBL.SqlServer
                 using SqlCommand command = new(sql, connection);
                 command.Parameters.AddWithValue("@Name", target.Name);
                 command.Parameters.AddWithValue("@ID", target.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        internal static bool RemoveAllDataInTargetTable()
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = $"DELETE FROM [Target]";
+                using SqlCommand command = new(sql, connection);
                 connection.Open();
                 command.ExecuteNonQuery();
             }
@@ -407,6 +443,24 @@ namespace CourseProject2022FallBL.SqlServer
                 command.Parameters.AddWithValue("@Name", currency.Name);
                 command.Parameters.AddWithValue("@Ratio", currency.Ratio);
                 command.Parameters.AddWithValue("@ID", currency.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        internal static bool RemoveAllDataInCurrencyTable()
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = $"DELETE FROM Currency";
+                using SqlCommand command = new(sql, connection);
                 connection.Open();
                 command.ExecuteNonQuery();
             }
@@ -599,6 +653,24 @@ namespace CourseProject2022FallBL.SqlServer
             return true;
         }
 
+        internal static bool RemoveAllDataInOperationTable()
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = $"DELETE FROM Operation";
+                using SqlCommand command = new(sql, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
 
         #region Income
@@ -724,6 +796,24 @@ namespace CourseProject2022FallBL.SqlServer
                 using SqlCommand command = new(sql, connection);
                 command.Parameters.AddWithValue("@OperationID", income.Operation.ID);
                 command.Parameters.AddWithValue("@ID", income.ID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        internal static bool RemoveAllDataInIncomeTable()
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = $"DELETE FROM Income";
+                using SqlCommand command = new(sql, connection);
                 connection.Open();
                 command.ExecuteNonQuery();
             }
@@ -872,6 +962,24 @@ namespace CourseProject2022FallBL.SqlServer
             return true;
         }
 
+        internal static bool RemoveAllDataInExpenseTable()
+        {
+            try
+            {
+                using SqlConnection connection = new(builder.ConnectionString);
+                var sql = $"DELETE FROM Expense";
+                using SqlCommand command = new(sql, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
 
         #region Action
@@ -892,5 +1000,16 @@ namespace CourseProject2022FallBL.SqlServer
         }
 
         #endregion
+
+        internal static bool RemoveAllDataFromTables()
+        {
+            if (!RemoveAllDataInExpenseTable()) return false;
+            if (!RemoveAllDataInIncomeTable()) return false;
+            if (!RemoveAllDataInOperationTable()) return false;
+            if (!RemoveAllDataInCurrencyTable()) return false;
+            if (!RemoveAllDataInTargetTable()) return false;
+            if (!RemoveAllDataInUserTable()) return false;
+            return true;
+        }
     }
 }

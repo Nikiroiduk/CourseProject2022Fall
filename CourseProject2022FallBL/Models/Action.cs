@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CourseProject2022FallBL.Models
 {
-    public abstract class Action
+    public class Action
     {
         public int ID { get; set; }
         public Operation Operation { get; set; }

@@ -14,6 +14,15 @@ namespace CourseProject2022FallBL.Services
             return SqlServerCrud.AddUser(user);
         }
 
+        public static bool AddUsers(List<User> users)
+        {
+            foreach (var user in users)
+            {
+                if (!UpsertUser(user)) return false;
+            }
+            return true;
+        }
+
         public static User GetUser(int ID)
         {
             return SqlServerCrud.GetUser(ID);
@@ -47,6 +56,11 @@ namespace CourseProject2022FallBL.Services
                 return UpdateUser(user);
         }
 
+        public static bool RemoveAllDataInUserTable()
+        {
+            return SqlServerCrud.RemoveAllDataInUserTable();
+        }
+
         #endregion
 
         #region Target
@@ -54,6 +68,15 @@ namespace CourseProject2022FallBL.Services
         public static bool AddTarget(Target target)
         {
             return SqlServerCrud.AddTarget(target);
+        }
+
+        public static bool AddTargets(List<Target> targets)
+        {
+            foreach (var target in targets)
+            {
+                if (!UpsertTarget(target)) return false;
+            }
+            return true;
         }
 
         public static Target GetTarget(int ID)
@@ -98,6 +121,15 @@ namespace CourseProject2022FallBL.Services
             return SqlServerCrud.AddCurrency(currency);
         }
 
+        public static bool AddCurrencies(List<Currency> currencies)
+        {
+            foreach (var currency in currencies)
+            {
+                if (!UpsertCurrency(currency)) return false;
+            }
+            return true;
+        }
+
         public static Currency GetCurrency(int ID)
         {
             return SqlServerCrud.GetCurrency(ID);
@@ -138,6 +170,15 @@ namespace CourseProject2022FallBL.Services
         public static bool AddOperation(Operation operation)
         {
             return SqlServerCrud.AddOperation(operation);
+        }
+
+        public static bool AddOperations(List<Operation> operations)
+        {
+            foreach (var operation in operations)
+            {
+                if (!UpsertOperation(operation)) return false;
+            }
+            return true;
         }
 
         public static Operation GetOperation(int ID)
@@ -182,6 +223,15 @@ namespace CourseProject2022FallBL.Services
             return SqlServerCrud.AddIncome(income);
         }
 
+        public static bool AddIncomes(List<Income> incomes)
+        {
+            foreach (var income in incomes)
+            {
+                if (!UpsertIncome(income)) return false;
+            }
+            return true;
+        }
+
         public static Income GetIncome(int ID)
         {
             return SqlServerCrud.GetIncome(ID);
@@ -224,6 +274,15 @@ namespace CourseProject2022FallBL.Services
             return SqlServerCrud.AddExpense(expense);
         }
 
+        public static bool AddExpenses(List<Expense> expenses)
+        {
+            foreach (var expense in expenses)
+            {
+                if (!UpsertExpense(expense)) return false;
+            }
+            return true;
+        }
+
         public static Expense GetExpense(int ID)
         {
             return SqlServerCrud.GetExpense(ID);
@@ -257,6 +316,11 @@ namespace CourseProject2022FallBL.Services
                 return UpdateExpense(expense);
         }
 
+        public static bool RemoveAllDataInExpenseTable()
+        {
+            return SqlServerCrud.RemoveAllDataInExpenseTable();
+        }
+
         #endregion
 
         #region Action
@@ -267,6 +331,11 @@ namespace CourseProject2022FallBL.Services
         }
 
         #endregion
+
+        public static bool RemoveAllDataFromTables()
+        {
+            return SqlServerCrud.RemoveAllDataFromTables();
+        }
 
     }
 }

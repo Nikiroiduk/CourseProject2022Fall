@@ -11,7 +11,7 @@ namespace CourseProject2022FallBL.Models
         public User User { get; set; } = new ();
         public float Value {
             get { return _Value; }
-            set { _Value = value; NotifyPropertyChanged(); }
+            set { _Value = LimitDecimalPlace(value, 2); NotifyPropertyChanged(); }
         }
         public string Comment {
             get { return _Comment; }
@@ -23,24 +23,18 @@ namespace CourseProject2022FallBL.Models
 
         public bool isDefault => _Comment == "Undefined" || _Value == 0f || Currency.isDefault || Target.isDefault || User.isDefault;
 
+        private float LimitDecimalPlace(double number, int limitPlace)
+        {
+            string sNumber = number.ToString();
+            int decimalIndex = sNumber.IndexOf(".");
+            if (decimalIndex != -1 && sNumber.Length - decimalIndex >= 2)
+            {
+                sNumber = sNumber.Remove(decimalIndex + limitPlace + 1);
+            }
 
-        //public event PropertyChangedEventHandler? PropertyChanged
-        //{
-        //    add
-        //    {
-        //        ((INotifyPropertyChanged)Currency).PropertyChanged += value;
-        //        ((INotifyPropertyChanged)Target).PropertyChanged += value;
-        //        ((INotifyPropertyChanged)User).PropertyChanged += value;
-        //    }
-
-        //    remove
-        //    {
-        //        ((INotifyPropertyChanged)Currency).PropertyChanged -= value;
-        //        ((INotifyPropertyChanged)Target).PropertyChanged -= value;
-        //        ((INotifyPropertyChanged)User).PropertyChanged -= value;
-        //    }
-        //}
-
+            var result = float.Parse(sNumber);
+            return result;
+        }
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

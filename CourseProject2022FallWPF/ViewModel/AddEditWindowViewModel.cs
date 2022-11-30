@@ -62,6 +62,16 @@ namespace CourseProject2022FallWPF.ViewModel
                 Currency = expense.Operation.Currency;
                 ExpenseBlock = new AddEditIncomeBlock();
             }
+            else if (curObject is Action action)
+            {
+                action.Operation = new Operation();
+                Action = action;
+                Operation = Action.Operation;
+                User = Action.Operation.User;
+                Target = Action.Operation.Target;
+                Currency = Action.Operation.Currency;
+                ActionBlock = new AddEditActionBlock();
+            }
         }
 
         #region User

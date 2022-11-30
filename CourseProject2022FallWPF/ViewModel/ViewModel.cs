@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace CourseProject2022FallWPF.ViewModel
 {
-    public abstract class ViewModel : INotifyPropertyChanged, IDisposable
+    public abstract class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -20,7 +20,5 @@ namespace CourseProject2022FallWPF.ViewModel
             OnPropertyChanged(PropertyName);
             return true;
         }
-
-        public virtual void Dispose() { }
     }
 }

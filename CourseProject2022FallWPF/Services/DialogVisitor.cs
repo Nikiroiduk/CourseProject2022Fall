@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
+using Action = CourseProject2022FallBL.Models.Action;
+
 namespace CourseProject2022FallWPF.Services
 {
     public class DialogVisitor : IDialogService
@@ -80,6 +82,23 @@ namespace CourseProject2022FallWPF.Services
             win.DataContext = winVm;
             if ((bool)win.ShowDialog())
                 return e;
+            return new Expense();
+        }
+
+        private Action Visit(Action a)
+        {
+            AddEditWindow win = new();
+            AddEditWindowViewModel winVm = new(a);
+            win.DataContext = winVm;
+            if ((bool)win.ShowDialog())
+                if (winVm.IsIncome)
+                {
+                    return new Income() { Operation = winVm.Action.Operation };
+                }
+                else if (!winVm.IsIncome)
+                {
+                    return new Expense() { Operation = winVm.Action.Operation };
+                }
             return new Expense();
         }
     }

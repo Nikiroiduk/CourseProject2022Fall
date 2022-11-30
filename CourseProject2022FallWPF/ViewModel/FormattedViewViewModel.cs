@@ -1,7 +1,10 @@
-﻿using CourseProject2022FallBL.Models;
+﻿using Azure.Identity;
+using CourseProject2022FallBL.Models;
 using CourseProject2022FallBL.Services;
 using CourseProject2022FallWPF.Model.Commands;
 using CourseProject2022FallWPF.Services;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -12,6 +15,7 @@ namespace CourseProject2022FallWPF.ViewModel
     public class FormattedViewViewModel : ViewModel
     {
         private readonly DialogVisitor Visitor = new();
+        private static string DeleteErrorMessage(string name) => $"An error occurred when deleting a {name}";
 
         public FormattedViewViewModel()
         {
@@ -111,7 +115,53 @@ namespace CourseProject2022FallWPF.ViewModel
         private bool CanAddItem(object p) => true;
         private void OnAddItem(object p)
         {
-            
+            var action = (Action)Visitor.DynamicVisit(new Action());
+            if (action.isDefault || action == null)
+                return;
+
+            // TODO: Refactor
+            if (action is Income income)
+            {
+                DataService.UpsertOperation(income.Operation);
+                income.Operation.User.ID = DataService.GetUserID(income.Operation.User);
+                income.Operation.Target.ID = DataService.GetTargetID(income.Operation.Target);
+                income.Operation.Currency.ID = DataService.GetCurrencyID(income.Operation.Currency);
+                income.Operation.ID = DataService.GetOperationID(income.Operation);
+                DataService.UpsertIncome(income);
+                income.ID = DataService.GetIncomeID(income);
+                if (Items.Where(a => a is Income && a.ID == income.ID).IsNullOrEmpty())
+                    Items.Add(income);
+                else
+                    foreach (var a in Items.Where(a => a is Income && a.ID == income.ID))
+                    {
+                        a.Operation.Value = income.Operation.Value;
+                        a.Operation.Comment = income.Operation.Comment;
+                        a.Operation.Target = income.Operation.Target;
+                        a.Operation.User = income.Operation.User;
+                        a.Operation.Currency = income.Operation.Currency;
+                    }
+            }
+            else if (action is Expense expense)
+            {
+                DataService.UpsertOperation(expense.Operation);
+                expense.Operation.User.ID = DataService.GetUserID(expense.Operation.User);
+                expense.Operation.Target.ID = DataService.GetTargetID(expense.Operation.Target);
+                expense.Operation.Currency.ID = DataService.GetCurrencyID(expense.Operation.Currency);
+                expense.Operation.ID = DataService.GetOperationID(expense.Operation);
+                DataService.UpsertExpense(expense);
+                expense.ID = DataService.GetExpenseID(expense);
+                if (Items.Where(a => a is Expense && a.ID == expense.ID).IsNullOrEmpty())
+                    Items.Add(expense);
+                else
+                    foreach (var a in Items.Where(a => a is Expense && a.ID == expense.ID))
+                    {
+                        a.Operation.Value = expense.Operation.Value;
+                        a.Operation.Comment = expense.Operation.Comment;
+                        a.Operation.Target = expense.Operation.Target;
+                        a.Operation.User = expense.Operation.User;
+                        a.Operation.Currency = expense.Operation.Currency;
+                    }
+            }
         }
 
         #endregion
@@ -123,7 +173,36 @@ namespace CourseProject2022FallWPF.ViewModel
         private bool CanEditItem(object p) => true;
         private void OnEditItem(object p)
         {
+            var action = p as Action;
+            action = (Action)Visitor.DynamicVisit(action);
+            if (action.isDefault)
+                return;
 
+            // TODO: Refactor
+            if (action is Income income)
+            {
+                DataService.UpdateIncome(income);
+                foreach (var a in Items.Where(a => a is Income && a.ID == income.ID))
+                {
+                    a.Operation.Value = income.Operation.Value;
+                    a.Operation.Comment = income.Operation.Comment;
+                    a.Operation.Target = income.Operation.Target;
+                    a.Operation.User = income.Operation.User;
+                    a.Operation.Currency = income.Operation.Currency;
+                }
+            }
+            else if (action is Expense expense)
+            {
+                DataService.UpdateExpense(expense);
+                foreach (var a in Items.Where(a => a is Expense && a.ID == expense.ID))
+                {
+                    a.Operation.Value = expense.Operation.Value;
+                    a.Operation.Comment = expense.Operation.Comment;
+                    a.Operation.Target = expense.Operation.Target;
+                    a.Operation.User = expense.Operation.User;
+                    a.Operation.Currency = expense.Operation.Currency;
+                }
+            }
         }
 
         #endregion
@@ -135,7 +214,22 @@ namespace CourseProject2022FallWPF.ViewModel
         private bool CanRemoveItem(object p) => true;
         private void OnRemoveItem(object p)
         {
+            var action = p as Action;
+            if (action is Income income)
+            {
+                if (DataService.RemoveIncome(income))
+                    Items.Remove(income);
+                else
+                    Visitor.DynamicVisit(DeleteErrorMessage("income"));
+            }
+            else if (action is Expense expense)
+            {
+                if (DataService.RemoveExpense(expense))
+                    Items.Remove(expense);
+                else
+                    Visitor.DynamicVisit(DeleteErrorMessage("expense"));
 
+            }
         }
 
         #endregion

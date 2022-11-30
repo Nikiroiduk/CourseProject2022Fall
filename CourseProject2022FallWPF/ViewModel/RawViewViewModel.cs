@@ -227,7 +227,7 @@ namespace CourseProject2022FallWPF.ViewModel
                 if (ExpenseTable.Where(e => e.ID == expense.ID).IsNullOrEmpty())
                     ExpenseTable.Add(expense);
                 else
-                    foreach (var e in IncomeTable.Where(e => e.ID == expense.ID))
+                    foreach (var e in ExpenseTable.Where(e => e.ID == expense.ID))
                     {
                         e.Operation.Value = expense.Operation.Value;
                         e.Operation.Comment = expense.Operation.Comment;
