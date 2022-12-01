@@ -2,9 +2,6 @@
 
 namespace CourseProject2022FallWPF.View
 {
-    /// <summary>
-    /// Interaction logic for AddEditWindow.xaml
-    /// </summary>
     public partial class AddEditWindow : Window
     {
         public AddEditWindow()

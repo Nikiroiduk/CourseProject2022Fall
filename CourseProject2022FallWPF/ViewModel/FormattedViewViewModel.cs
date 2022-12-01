@@ -23,6 +23,7 @@ namespace CourseProject2022FallWPF.ViewModel
             AddItem = new LambdaCommand(OnAddItem, CanAddItem);
             EditItem = new LambdaCommand(OnEditItem, CanEditItem);
             RemoveItem = new LambdaCommand(OnRemoveItem, CanRemoveItem);
+            Reload = new LambdaCommand(OnReload, CanReload);
             OnTypeSelected("All");
         }
 
@@ -104,6 +105,18 @@ namespace CourseProject2022FallWPF.ViewModel
             IsAllSelected = all;
             IsIncomeSelected = income;
             IsExpenseSelected = expense;
+        }
+
+        #endregion
+
+        #region Reload
+
+        public ICommand Reload { get; }
+
+        private bool CanReload(object p) => true;
+        private void OnReload(object p)
+        {
+            Items = new(DataService.GetActions());
         }
 
         #endregion

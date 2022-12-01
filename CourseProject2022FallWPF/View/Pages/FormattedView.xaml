@@ -68,7 +68,7 @@
                         </Canvas>
                     </Viewbox>
                 </Button>
-                <Button Style="{DynamicResource MaterialDesignFloatingActionLightButton}" Command="{Binding Add}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel = 3,AncestorType = TabControl}, Path=TabControl.SelectedItem}">
+                <Button Style="{DynamicResource MaterialDesignFloatingActionLightButton}" Command="{Binding AddItem}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel = 3,AncestorType = TabControl}, Path=TabControl.SelectedItem}">
                     <Canvas Height="30"  Width="30">
                         <Path Stroke="#FFFFFF" StrokeThickness="2">
                             <Path.Data>

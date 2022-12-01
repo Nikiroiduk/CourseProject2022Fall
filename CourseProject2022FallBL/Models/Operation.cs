@@ -10,8 +10,8 @@ namespace CourseProject2022FallBL.Models
         public Target Target { get; set; } = new ();
         public User User { get; set; } = new ();
         public float Value {
-            get { return _Value; }
-            set { _Value = LimitDecimalPlace(value, 2); NotifyPropertyChanged(); }
+            get { return LimitDecimalPlace(_Value, 2); }
+            set { _Value = value; NotifyPropertyChanged(); }
         }
         public string Comment {
             get { return _Comment; }

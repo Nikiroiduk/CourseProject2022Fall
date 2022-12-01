@@ -61,6 +61,11 @@ namespace CourseProject2022FallBL.Services
             return SqlServerCrud.RemoveAllDataInUserTable();
         }
 
+        public static List<Operation> GetIncomeExpenseDataByUser(User user, bool isIncome)
+        {
+            return SqlServerActions.GetIncomeExpenseDataByUser(user, isIncome);
+        }
+
         #endregion
 
         #region Target

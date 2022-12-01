@@ -9,7 +9,7 @@ namespace CourseProject2022FallBL.SqlServer
 {
     internal static class SqlServerCrud
     {
-        private static SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
+        internal static SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
         {
             DataSource = "DESKTOP-9922B5A",
             InitialCatalog = "Finances",

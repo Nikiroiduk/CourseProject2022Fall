@@ -1,10 +1,5 @@
 ﻿using Bogus;
 using CourseProject2022FallBL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CourseProject2022FallBL.Services
 {
@@ -26,8 +21,16 @@ namespace CourseProject2022FallBL.Services
             "Engaging. It keeps your mind occupied while you wait.",
             "Nice use of red in this shot."
         };
+        private static string[] names = 
+        {
+            "Sebastian",
+            "Denise",
+            "Larry",
+            "Monty",
+            "Maggie",
+        };
         
-        public static Faker<User> testUsers = new Faker<User>().RuleFor(u => u.Name, (f, u) => f.Name.FirstName());
+        public static Faker<User> testUsers = new Faker<User>().RuleFor(u => u.Name, (f, u) => f.PickRandom(names));
         public static Faker<Target> testTargets = new Faker<Target>().RuleFor(t => t.Name, f => f.PickRandom(categories));
         public static List<Currency> testCurrencies = new() 
         { 

@@ -2,6 +2,7 @@
 using CourseProject2022FallWPF.Model.Commands;
 using CourseProject2022FallWPF.Services;
 using CourseProject2022FallWPF.View;
+using CourseProject2022FallWPF.View.Pages;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -13,6 +14,9 @@ namespace CourseProject2022FallWPF.ViewModel
         {
             RawView = new LambdaCommand(OnRawView, CanRawView);
             FormattedView = new LambdaCommand(OnFormattedView, CanFormattedView);
+            UserReport = new LambdaCommand(OnUserReport, CanUserReport);
+            TargetReport = new LambdaCommand(OnTargetReport, CanTargetReport);
+            CurrencyReport = new LambdaCommand(OnCurrencyReport, CanCurrencyReport);
         }
 
         #region ActivePage
@@ -44,5 +48,36 @@ namespace CourseProject2022FallWPF.ViewModel
             ActivePage = new FormattedView();
         }
         #endregion
+
+        #region UserReport
+        public ICommand UserReport { get; }
+
+        private bool CanUserReport(object p) => true;
+        private void OnUserReport(object p)
+        {
+            ActivePage = new UserReportView();
+        }
+        #endregion
+
+        #region TargetReport
+        public ICommand TargetReport { get; }
+
+        private bool CanTargetReport(object p) => true;
+        private void OnTargetReport(object p)
+        {
+            ActivePage = new TargetReportView();
+        }
+        #endregion
+
+        #region CurrencyReport
+        public ICommand CurrencyReport { get; }
+
+        private bool CanCurrencyReport(object p) => true;
+        private void OnCurrencyReport(object p)
+        {
+            ActivePage = new CurrencyReportView();
+        }
+        #endregion
+
     }
 }

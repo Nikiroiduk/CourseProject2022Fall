@@ -10,14 +10,39 @@ namespace CourseProject2022FallBL.SqlServer
 {
     internal static class SqlServerActions
     {
-        private static SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
+        internal static List<Operation> GetIncomeExpenseDataByUser(User user, bool isIncome)
         {
-            DataSource = "DESKTOP-9922B5A",
-            InitialCatalog = "Finances",
-            IntegratedSecurity = true,
-            Encrypt = false,
-        };
-
-        
+            var res = new List<Operation>();
+            try
+            {
+                using SqlConnection connection = new(SqlServerCrud.builder.ConnectionString);
+                var sql = $"SELECT Operation.TargetID, Operation.[Value], Operation.CurrencyID, Operation.UserID, Operation.Comment, Operation.ID " +
+                    $"FROM " + (isIncome ? "Income" : "Expense") + " INNER JOIN Operation " +
+                    $"ON " + (isIncome ? "Income" : "Expense") + ".OperationID = Operation.ID " +
+                    $"WHERE UserID = @UserID " +
+                    $"ORDER BY Operation.TargetID";
+                using SqlCommand command = new(sql, connection);
+                command.Parameters.AddWithValue("@UserID", user.ID);
+                connection.Open();
+                using SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    res.Add(new Operation
+                    {
+                        Target = SqlServerCrud.GetTarget((int)reader.GetValue(0)),
+                        Value = (float)reader.GetValue(1),
+                        Currency = SqlServerCrud.GetCurrency((int)reader.GetValue(2)),
+                        User = SqlServerCrud.GetUser((int)reader.GetValue(3)),
+                        Comment = reader.GetString(4),
+                        ID = (int)reader.GetValue(5),
+                    }) ;
+                }
+            }
+            catch (Exception)
+            {
+                return new List<Operation>();
+            }
+            return res;
+        }
     }
 }

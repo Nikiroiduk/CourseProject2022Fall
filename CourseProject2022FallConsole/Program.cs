@@ -129,34 +129,43 @@ Console.WriteLine();
 
 //DataService.AddUsers(new List<User>(DataGenerator.testUsers.GenerateLazy(100)));
 
-Console.WriteLine(DataService.RemoveAllDataFromTables());
+//Console.WriteLine(DataService.RemoveAllDataFromTables() ? "All data removed!" : "Something went wrong");
 
-List<Income> incomes = new(DataGenerator.testIncomes.GenerateLazy(100));
-//Console.WriteLine(DataService.AddUsers(incomes.Select(u => u.Operation.User).ToList()));
-//Console.WriteLine(DataService.AddTargets(incomes.Select(u => u.Operation.Target).ToList()));
-//Console.WriteLine(DataService.AddCurrencies(incomes.Select(u => u.Operation.Currency).ToList()));
-foreach (var income in incomes)
+//List<Income> incomes = new(DataGenerator.testIncomes.GenerateLazy(100));
+//foreach (var income in incomes)
+//{
+//    DataService.UpsertUser(income.Operation.User);
+//    income.Operation.User.ID = DataService.GetUserID(income.Operation.User);
+//    DataService.UpsertTarget(income.Operation.Target);
+//    income.Operation.Target.ID = DataService.GetTargetID(income.Operation.Target);
+//    DataService.UpsertCurrency(income.Operation.Currency);
+//    income.Operation.Currency.ID = DataService.GetCurrencyID(income.Operation.Currency);
+//    DataService.UpsertOperation(income.Operation);
+//    income.Operation.ID = DataService.GetOperationID(income.Operation);
+//    DataService.UpsertIncome(income);
+//    income.ID = DataService.GetIncomeID(income);
+//}
+
+//List<Expense> expenses = new(DataGenerator.testExpenses.GenerateLazy(100));
+//foreach (var expense in expenses)
+//{
+//    DataService.UpsertUser(expense.Operation.User);
+//    expense.Operation.User.ID = DataService.GetUserID(expense.Operation.User);
+//    DataService.UpsertTarget(expense.Operation.Target);
+//    expense.Operation.Target.ID = DataService.GetTargetID(expense.Operation.Target);
+//    DataService.UpsertCurrency(expense.Operation.Currency);
+//    expense.Operation.Currency.ID = DataService.GetCurrencyID(expense.Operation.Currency);
+//    DataService.UpsertOperation(expense.Operation);
+//    expense.Operation.ID = DataService.GetOperationID(expense.Operation);
+//    DataService.UpsertExpense(expense);
+//    expense.ID = DataService.GetExpenseID(expense);
+//}
+
+
+var meh = DataService.GetIncomeExpenseDataByUser(new User() { ID = 2755, Name = "Maggie" }, true);
+
+foreach (var item in meh)
 {
-    DataService.UpsertOperation(income.Operation);
-    income.Operation.User.ID = DataService.GetUserID(income.Operation.User);
-    income.Operation.Target.ID = DataService.GetTargetID(income.Operation.Target);
-    income.Operation.Currency.ID = DataService.GetCurrencyID(income.Operation.Currency);
-    income.Operation.ID = DataService.GetOperationID(income.Operation);
-    DataService.UpsertIncome(income);
-    income.ID = DataService.GetIncomeID(income);
+    Console.WriteLine($"{item.Value} {item.Target.Name}");
 }
 
-List<Expense> expenses = new(DataGenerator.testExpenses.GenerateLazy(100));
-//Console.WriteLine(DataService.AddUsers(expenses.Select(u => u.Operation.User).ToList()));
-//Console.WriteLine(DataService.AddTargets(expenses.Select(u => u.Operation.Target).ToList()));
-//Console.WriteLine(DataService.AddCurrencies(expenses.Select(u => u.Operation.Currency).ToList()));
-foreach (var expense in expenses)
-{
-    DataService.UpsertOperation(expense.Operation);
-    expense.Operation.User.ID = DataService.GetUserID(expense.Operation.User);
-    expense.Operation.Target.ID = DataService.GetTargetID(expense.Operation.Target);
-    expense.Operation.Currency.ID = DataService.GetCurrencyID(expense.Operation.Currency);
-    expense.Operation.ID = DataService.GetOperationID(expense.Operation);
-    DataService.UpsertExpense(expense);
-    expense.ID = DataService.GetExpenseID(expense);
-}
