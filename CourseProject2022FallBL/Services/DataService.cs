@@ -5,7 +5,7 @@ using Action = CourseProject2022FallBL.Models.Action;
 
 namespace CourseProject2022FallBL.Services
 {
-    public static class DataService
+    public class DataService
     {
         #region User
 
@@ -117,6 +117,11 @@ namespace CourseProject2022FallBL.Services
                 return UpdateTarget(target);
         }
 
+        public static List<Operation> GetIncomeExpenseDataByTarget(Target target, bool isIncome)
+        {
+            return SqlServerActions.GetIncomeExpenseDataByTarget(target, isIncome);
+        }
+
         #endregion
 
         #region Currency
@@ -166,6 +171,11 @@ namespace CourseProject2022FallBL.Services
                 return AddCurrency(currency);
             else
                 return UpdateCurrency(currency);
+        }
+
+        public static List<Operation> GetIncomeExpenseDataByCurrency( bool isIncome)
+        {
+            return SqlServerActions.GetIncomeExpenseDataByCurrency(isIncome);
         }
 
         #endregion

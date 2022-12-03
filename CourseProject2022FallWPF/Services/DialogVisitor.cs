@@ -85,7 +85,7 @@ namespace CourseProject2022FallWPF.Services
             return new Expense();
         }
 
-        private Action Visit(Action a)
+        private Action? Visit(Action a)
         {
             AddEditWindow win = new();
             AddEditWindowViewModel winVm = new(a);
@@ -99,7 +99,7 @@ namespace CourseProject2022FallWPF.Services
                 {
                     return new Expense() { Operation = winVm.Action.Operation };
                 }
-            return new Expense();
+            return null;
         }
     }
 }

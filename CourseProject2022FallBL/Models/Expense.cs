@@ -22,5 +22,19 @@ namespace CourseProject2022FallBL.Models
                 ((INotifyPropertyChanged)Operation).PropertyChanged -= value;
             }
         }
+
+        public override string ToString()
+        {
+            return $"{ID},{Operation.ID}," +
+                $"{Operation.Value}," +
+                $"{Operation.Comment.Replace(",", "")}," +
+                $"{Operation.Currency.ID}," +
+                $"{Operation.Currency.Name}," +
+                $"{Operation.Currency.Ratio}," +
+                $"{Operation.Target.ID}," +
+                $"{Operation.Target.Name}," +
+                $"{Operation.User.ID}," +
+                $"{Operation.User.Name}\n";
+        }
     }
 }

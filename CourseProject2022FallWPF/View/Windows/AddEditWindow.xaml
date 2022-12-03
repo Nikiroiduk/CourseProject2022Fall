@@ -25,8 +25,8 @@
             </StackPanel>
         </ScrollViewer>
         <Grid Margin="4, 16, 4, 16" DockPanel.Dock="Bottom">
-            <Button Margin="0, 0, 10, 0" x:Name="Apply" Content="Apply" Grid.Column="0" Click="Apply_Click"/>
-            <Button Margin="10, 0, 0, 0" x:Name="Discard" Content="Discard" Grid.Column="1" Click="Discard_Click"/>
+            <Button Margin="0, 0, 10, 0" x:Name="Apply" Content="Apply" Grid.Column="0" Click="Apply_Click" Style="{StaticResource MaterialDesignFlatLightButton}"/>
+            <Button Margin="10, 0, 0, 0" x:Name="Discard" Content="Discard" Grid.Column="1" Click="Discard_Click" Style="{StaticResource MaterialDesignFlatLightButton}"/>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

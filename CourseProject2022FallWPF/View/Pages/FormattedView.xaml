@@ -102,7 +102,7 @@
                     ScrollViewer.CanContentScroll="False"
                     SelectionMode="Single" 
                     Grid.Row="1" 
-                    ItemsSource="{Binding ObservableItems}">
+                    ItemsSource="{Binding ItemsView}">
                 <ListView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Add"

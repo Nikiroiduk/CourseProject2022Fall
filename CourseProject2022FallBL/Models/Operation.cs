@@ -42,5 +42,19 @@ namespace CourseProject2022FallBL.Models
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        public override string ToString()
+        {
+            return $"{ID}," +
+                $"{Value}," +
+                $"{Comment.Replace(",", "")}," +
+                $"{Currency.ID}," +
+                $"{Currency.Name}," +
+                $"{Currency.Ratio}," +
+                $"{Target.ID}," +
+                $"{Target.Name}," +
+                $"{User.ID}," +
+                $"{User.Name}\n";
+        }
+
     }
 }

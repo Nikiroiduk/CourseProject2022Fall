@@ -3,10 +3,14 @@ using CourseProject2022FallBL.Models;
 using CourseProject2022FallBL.Services;
 using CourseProject2022FallWPF.Model.Commands;
 using CourseProject2022FallWPF.Services;
+using LiveCharts;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks.Dataflow;
+using System.Windows.Data;
 using System.Windows.Input;
 using Action = CourseProject2022FallBL.Models.Action;
 
@@ -25,23 +29,33 @@ namespace CourseProject2022FallWPF.ViewModel
             RemoveItem = new LambdaCommand(OnRemoveItem, CanRemoveItem);
             Reload = new LambdaCommand(OnReload, CanReload);
             OnTypeSelected("All");
+            ItemsView.Filter = ItemsFilter;
         }
-
-        #region Items
-        private ObservableCollection<Action> _Items = new (DataService.GetActions());
-        public ObservableCollection<Action> Items
-        {
-            get => _Items;
-            set => Set(ref _Items, value);
-        }
-        #endregion
 
         #region ObservableItems
-        private ObservableCollection<Action> _ObservableItems;
+        private ObservableCollection<Action> _ObservableItems = new (DataService.GetActions());
         public ObservableCollection<Action> ObservableItems
         {
             get => _ObservableItems;
             set => Set(ref _ObservableItems, value);
+        }
+
+        public ICollectionView ItemsView { get => CollectionViewSource.GetDefaultView(_ObservableItems); }
+        private bool ItemsFilter(object item)
+        {
+            if (item is Income && IsIncomeSelected)
+            {
+                return true;
+            }
+            else if (item is Expense && IsExpenseSelected)
+            {
+                return true;
+            }
+            else if (IsAllSelected)
+            {
+                return true;
+            }
+            return false;
         }
         #endregion
 
@@ -79,20 +93,21 @@ namespace CourseProject2022FallWPF.ViewModel
         private bool CanTypeSelected(object p) => true;
         private void OnTypeSelected(object p)
         {
-            if (p is string str){
+            if (p is string str)
+            {
                 switch (str)
                 {
                     case "All":
-                        ChangeState(true, false, false);
-                        ObservableItems = Items;
+                        if (!IsAllSelected)
+                            ChangeState(true, false, false);
                         break;
                     case "Income":
-                        ChangeState(false, true, false);
-                        ObservableItems = new(Items.Where(i => i is Income inc));
+                        if (!IsIncomeSelected)
+                            ChangeState(false, true, false);
                         break;
                     case "Expense":
-                        ChangeState(false, false, true);
-                        ObservableItems = new(Items.Where(e => e is Expense exp));
+                        if (!IsExpenseSelected)
+                            ChangeState(false, false, true);
                         break;
                     default:
                         break;
@@ -105,6 +120,7 @@ namespace CourseProject2022FallWPF.ViewModel
             IsAllSelected = all;
             IsIncomeSelected = income;
             IsExpenseSelected = expense;
+            ItemsView.Refresh();
         }
 
         #endregion
@@ -116,7 +132,7 @@ namespace CourseProject2022FallWPF.ViewModel
         private bool CanReload(object p) => true;
         private void OnReload(object p)
         {
-            Items = new(DataService.GetActions());
+            ObservableItems = new(DataService.GetActions());
         }
 
         #endregion
@@ -128,8 +144,12 @@ namespace CourseProject2022FallWPF.ViewModel
         private bool CanAddItem(object p) => true;
         private void OnAddItem(object p)
         {
-            var action = (Action)Visitor.DynamicVisit(new Action());
-            if (action.isDefault || action == null)
+            var action = (Action?)Visitor.DynamicVisit(new Action());
+            if (action == null)
+                return;
+            if (action is Income inc && inc.isDefault)
+                return;
+            if (action is Expense exp && exp.isDefault)
                 return;
 
             // TODO: Refactor
@@ -142,10 +162,10 @@ namespace CourseProject2022FallWPF.ViewModel
                 income.Operation.ID = DataService.GetOperationID(income.Operation);
                 DataService.UpsertIncome(income);
                 income.ID = DataService.GetIncomeID(income);
-                if (Items.Where(a => a is Income && a.ID == income.ID).IsNullOrEmpty())
-                    Items.Add(income);
+                if (ObservableItems.Where(a => a is Income && a.ID == income.ID).IsNullOrEmpty())
+                    ObservableItems.Add(income);
                 else
-                    foreach (var a in Items.Where(a => a is Income && a.ID == income.ID))
+                    foreach (var a in ObservableItems.Where(a => a is Income && a.ID == income.ID))
                     {
                         a.Operation.Value = income.Operation.Value;
                         a.Operation.Comment = income.Operation.Comment;
@@ -163,10 +183,10 @@ namespace CourseProject2022FallWPF.ViewModel
                 expense.Operation.ID = DataService.GetOperationID(expense.Operation);
                 DataService.UpsertExpense(expense);
                 expense.ID = DataService.GetExpenseID(expense);
-                if (Items.Where(a => a is Expense && a.ID == expense.ID).IsNullOrEmpty())
-                    Items.Add(expense);
+                if (ObservableItems.Where(a => a is Expense && a.ID == expense.ID).IsNullOrEmpty())
+                    ObservableItems.Add(expense);
                 else
-                    foreach (var a in Items.Where(a => a is Expense && a.ID == expense.ID))
+                    foreach (var a in ObservableItems.Where(a => a is Expense && a.ID == expense.ID))
                     {
                         a.Operation.Value = expense.Operation.Value;
                         a.Operation.Comment = expense.Operation.Comment;
@@ -187,15 +207,19 @@ namespace CourseProject2022FallWPF.ViewModel
         private void OnEditItem(object p)
         {
             var action = p as Action;
-            action = (Action)Visitor.DynamicVisit(action);
-            if (action.isDefault)
+            action = (Action?)Visitor.DynamicVisit(action);
+            if (action == null)
+                return;
+            if (action is Income inc && inc.isDefault)
+                return;
+            if (action is Expense exp && exp.isDefault)
                 return;
 
             // TODO: Refactor
             if (action is Income income)
             {
                 DataService.UpdateIncome(income);
-                foreach (var a in Items.Where(a => a is Income && a.ID == income.ID))
+                foreach (var a in ObservableItems.Where(a => a is Income && a.ID == income.ID))
                 {
                     a.Operation.Value = income.Operation.Value;
                     a.Operation.Comment = income.Operation.Comment;
@@ -207,7 +231,7 @@ namespace CourseProject2022FallWPF.ViewModel
             else if (action is Expense expense)
             {
                 DataService.UpdateExpense(expense);
-                foreach (var a in Items.Where(a => a is Expense && a.ID == expense.ID))
+                foreach (var a in ObservableItems.Where(a => a is Expense && a.ID == expense.ID))
                 {
                     a.Operation.Value = expense.Operation.Value;
                     a.Operation.Comment = expense.Operation.Comment;
@@ -231,14 +255,14 @@ namespace CourseProject2022FallWPF.ViewModel
             if (action is Income income)
             {
                 if (DataService.RemoveIncome(income))
-                    Items.Remove(income);
+                    ObservableItems.Remove(income);
                 else
                     Visitor.DynamicVisit(DeleteErrorMessage("income"));
             }
             else if (action is Expense expense)
             {
                 if (DataService.RemoveExpense(expense))
-                    Items.Remove(expense);
+                    ObservableItems.Remove(expense);
                 else
                     Visitor.DynamicVisit(DeleteErrorMessage("expense"));
 

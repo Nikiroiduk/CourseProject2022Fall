@@ -12,7 +12,7 @@ namespace CourseProject2022FallBL.Services
             "Good. So sleek.",
             "It's simple not just sleek!",
             "Just killer m8",
-            "Blur, gradient, texture, shot – killer m8",
+            "Blur gradient texture shot – killer m8",
             "Please stop!",
             "Designgasmed all over this!",
             "Very strong illustration, friend.",

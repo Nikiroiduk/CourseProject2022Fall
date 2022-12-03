@@ -1,6 +1,9 @@
-﻿using System;
+﻿using CourseProject2022FallWPF.Services;
+using CourseProject2022FallWPF.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +26,12 @@ namespace CourseProject2022FallWPF.View.Pages
         public CurrencyReportView()
         {
             InitializeComponent();
+            Formatter = value => value.ToString("0.00");
+            CurrencyGraphAxisY.LabelFormatter = Formatter;
+            DataContext = new CurrencyReportViewViewModel(new DefaultSaveDialogService(), new FileService());
         }
+
+        public Func<double, string> Formatter { get; set; }
+
     }
 }
