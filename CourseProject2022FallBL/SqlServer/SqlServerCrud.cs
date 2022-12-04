@@ -9,7 +9,7 @@ namespace CourseProject2022FallBL.SqlServer
 {
     internal static class SqlServerCrud
     {
-        internal static SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
+        internal static SqlConnectionStringBuilder builder = new()
         {
             DataSource = "DESKTOP-9922B5A",
             InitialCatalog = "Finances",
@@ -19,8 +19,9 @@ namespace CourseProject2022FallBL.SqlServer
 
         #region User
 
-        internal static bool AddUser(User user)
+        internal static bool AddUser(User user, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);
@@ -38,8 +39,9 @@ namespace CourseProject2022FallBL.SqlServer
             return true;
         }
 
-        internal static User GetUser(int ID)
+        internal static User GetUser(int ID, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             var res = new User();
             try
             {
@@ -61,8 +63,9 @@ namespace CourseProject2022FallBL.SqlServer
             return res;
         }
 
-        internal static List<User> GetUsers()
+        internal static List<User> GetUsers(string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             var res = new List<User>();
             try
             {
@@ -83,8 +86,9 @@ namespace CourseProject2022FallBL.SqlServer
             return res;
         }
 
-        internal static int GetUserID(User user)
+        internal static int GetUserID(User user, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             var res = 0;
             try
             {
@@ -106,8 +110,9 @@ namespace CourseProject2022FallBL.SqlServer
             return res;
         }
 
-        internal static bool UpdateUser(User user)
+        internal static bool UpdateUser(User user, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);
@@ -127,8 +132,9 @@ namespace CourseProject2022FallBL.SqlServer
             return true;
         }
 
-        internal static bool RemoveUser(User user)
+        internal static bool RemoveUser(User user, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);
@@ -148,8 +154,9 @@ namespace CourseProject2022FallBL.SqlServer
             return true;
         }
 
-        internal static bool RemoveAllDataInUserTable()
+        internal static bool RemoveAllDataInUserTable(string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);
@@ -170,8 +177,9 @@ namespace CourseProject2022FallBL.SqlServer
 
         #region Target
 
-        internal static bool AddTarget(Target target)
+        internal static bool AddTarget(Target target, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);
@@ -189,8 +197,9 @@ namespace CourseProject2022FallBL.SqlServer
             return true;
         }
 
-        internal static Target GetTarget(int ID)
+        internal static Target GetTarget(int ID, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             var res = new Target();
             try
             {
@@ -212,8 +221,9 @@ namespace CourseProject2022FallBL.SqlServer
             return res;
         }
 
-        internal static List<Target> GetTargets()
+        internal static List<Target> GetTargets(string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             var res = new List<Target>();
             try
             {
@@ -234,8 +244,9 @@ namespace CourseProject2022FallBL.SqlServer
             return res;
         }
 
-        internal static int GetTargetID(Target target)
+        internal static int GetTargetID(Target target, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             var res = 0;
             try
             {
@@ -257,8 +268,9 @@ namespace CourseProject2022FallBL.SqlServer
             return res;
         }
 
-        internal static bool UpdateTarget(Target target)
+        internal static bool UpdateTarget(Target target, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);
@@ -278,8 +290,9 @@ namespace CourseProject2022FallBL.SqlServer
             return true;
         }
 
-        internal static bool RemoveTarget(Target target)
+        internal static bool RemoveTarget(Target target, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);
@@ -299,8 +312,9 @@ namespace CourseProject2022FallBL.SqlServer
             return true;
         }
 
-        internal static bool RemoveAllDataInTargetTable()
+        internal static bool RemoveAllDataInTargetTable(string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);

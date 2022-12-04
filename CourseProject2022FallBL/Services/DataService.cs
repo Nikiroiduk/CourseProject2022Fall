@@ -1,5 +1,6 @@
 ﻿using CourseProject2022FallBL.Models;
 using CourseProject2022FallBL.SqlServer;
+using System.Collections.Specialized;
 using Action = CourseProject2022FallBL.Models.Action;
 
 
@@ -7,61 +8,62 @@ namespace CourseProject2022FallBL.Services
 {
     public class DataService
     {
+
         #region User
 
-        public static bool AddUser(User user)
+        public static bool AddUser(User user, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.AddUser(user);
+            return SqlServerCrud.AddUser(user, InitialCatalog: InitialCatalog);
         }
 
-        public static bool AddUsers(List<User> users)
+        public static bool AddUsers(List<User> users, string InitialCatalog = "Finances")
         {
             foreach (var user in users)
             {
-                if (!UpsertUser(user)) return false;
+                if (!UpsertUser(user, InitialCatalog)) return false;
             }
             return true;
         }
 
-        public static User GetUser(int ID)
+        public static User GetUser(int ID, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.GetUser(ID);
+            return SqlServerCrud.GetUser(ID, InitialCatalog);
         }
 
-        public static List<User> GetUsers()
+        public static List<User> GetUsers(string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.GetUsers();
+            return SqlServerCrud.GetUsers(InitialCatalog);
         }
 
-        public static int GetUserID(User user)
+        public static int GetUserID(User user, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.GetUserID(user);
+            return SqlServerCrud.GetUserID(user, InitialCatalog);
         }
 
-        public static bool UpdateUser(User user)
+        public static bool UpdateUser(User user, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.UpdateUser(user);
+            return SqlServerCrud.UpdateUser(user, InitialCatalog);
         }
 
-        public static bool RemoveUser(User user)
+        public static bool RemoveUser(User user, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.RemoveUser(user);
+            return SqlServerCrud.RemoveUser(user, InitialCatalog);
         }
 
-        public static bool UpsertUser(User user)
+        public static bool UpsertUser(User user, string InitialCatalog = "Finances")
         {
-            if (GetUserID(user) == 0)
-                return AddUser(user);
+            if (user.ID == 0)
+                return AddUser(user, InitialCatalog);
             else
-                return UpdateUser(user);
+                return UpdateUser(user, InitialCatalog);
         }
 
-        public static bool RemoveAllDataInUserTable()
+        public static bool RemoveAllDataInUserTable(string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.RemoveAllDataInUserTable();
+            return SqlServerCrud.RemoveAllDataInUserTable(InitialCatalog);
         }
 
-        public static List<Operation> GetIncomeExpenseDataByUser(User user, bool isIncome)
+        public static List<Operation> GetIncomeExpenseDataByUser(User user, bool isIncome, string InitialCatalog = "Finances")
         {
             return SqlServerActions.GetIncomeExpenseDataByUser(user, isIncome);
         }
@@ -70,51 +72,56 @@ namespace CourseProject2022FallBL.Services
 
         #region Target
 
-        public static bool AddTarget(Target target)
+        public static bool AddTarget(Target target, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.AddTarget(target);
+            return SqlServerCrud.AddTarget(target, InitialCatalog);
         }
 
-        public static bool AddTargets(List<Target> targets)
+        public static bool AddTargets(List<Target> targets, string InitialCatalog = "Finances")
         {
             foreach (var target in targets)
             {
-                if (!UpsertTarget(target)) return false;
+                if (!UpsertTarget(target, InitialCatalog)) return false;
             }
             return true;
         }
 
-        public static Target GetTarget(int ID)
+        public static Target GetTarget(int ID, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.GetTarget(ID);
+            return SqlServerCrud.GetTarget(ID, InitialCatalog);
         }
 
-        public static List<Target> GetTargets()
+        public static List<Target> GetTargets(string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.GetTargets();
+            return SqlServerCrud.GetTargets(InitialCatalog);
         }
 
-        public static int GetTargetID(Target target)
+        public static int GetTargetID(Target target, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.GetTargetID(target);
+            return SqlServerCrud.GetTargetID(target, InitialCatalog);
         }
 
-        public static bool UpdateTarget(Target target)
+        public static bool UpdateTarget(Target target, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.UpdateTarget(target);
+            return SqlServerCrud.UpdateTarget(target, InitialCatalog);
         }
 
-        public static bool RemoveTarget(Target target)
+        public static bool RemoveTarget(Target target, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.RemoveTarget(target);
+            return SqlServerCrud.RemoveTarget(target, InitialCatalog);
         }
 
-        public static bool UpsertTarget(Target target)
+        public static bool UpsertTarget(Target target, string InitialCatalog = "Finances")
         {
-            if (GetTargetID(target) == 0)
-                return AddTarget(target);
+            if (target.ID == 0)
+                return AddTarget(target, InitialCatalog);
             else
-                return UpdateTarget(target);
+                return UpdateTarget(target, InitialCatalog);
+        }
+
+        public static bool RemoveAllDataInTargetTable(string InitialCatalog = "Finances")
+        {
+            return SqlServerCrud.RemoveAllDataInTargetTable(InitialCatalog);
         }
 
         public static List<Operation> GetIncomeExpenseDataByTarget(Target target, bool isIncome)
@@ -173,7 +180,7 @@ namespace CourseProject2022FallBL.Services
                 return UpdateCurrency(currency);
         }
 
-        public static List<Operation> GetIncomeExpenseDataByCurrency( bool isIncome)
+        public static List<Operation> GetIncomeExpenseDataByCurrency(bool isIncome)
         {
             return SqlServerActions.GetIncomeExpenseDataByCurrency(isIncome);
         }

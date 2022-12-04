@@ -6,7 +6,7 @@ namespace CourseProject2022FallBL.Models
 {
     public class User : INotifyPropertyChanged
     {
-        public int ID { get; set; }
+        public int ID { get; set; } = 0;
         public string Name { 
             get { return _Name; } 
             set { _Name = value; NotifyPropertyChanged(); } 
