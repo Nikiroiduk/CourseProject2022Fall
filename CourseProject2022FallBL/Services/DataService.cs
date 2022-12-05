@@ -133,51 +133,56 @@ namespace CourseProject2022FallBL.Services
 
         #region Currency
 
-        public static bool AddCurrency(Currency currency)
+        public static bool AddCurrency(Currency currency, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.AddCurrency(currency);
+            return SqlServerCrud.AddCurrency(currency, InitialCatalog);
         }
 
-        public static bool AddCurrencies(List<Currency> currencies)
+        public static bool AddCurrencies(List<Currency> currencies, string InitialCatalog = "Finances")
         {
             foreach (var currency in currencies)
             {
-                if (!UpsertCurrency(currency)) return false;
+                if (!UpsertCurrency(currency, InitialCatalog)) return false;
             }
             return true;
         }
 
-        public static Currency GetCurrency(int ID)
+        public static Currency GetCurrency(int ID, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.GetCurrency(ID);
+            return SqlServerCrud.GetCurrency(ID, InitialCatalog);
         }
 
-        public static List<Currency> GetCurrencies()
+        public static List<Currency> GetCurrencies(string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.GetCurrencies();
+            return SqlServerCrud.GetCurrencies(InitialCatalog);
         }
 
-        public static int GetCurrencyID(Currency currency)
+        public static int GetCurrencyID(Currency currency, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.GetCurrencyID(currency);
+            return SqlServerCrud.GetCurrencyID(currency, InitialCatalog);
         }
 
-        public static bool UpdateCurrency(Currency currency)
+        public static bool UpdateCurrency(Currency currency, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.UpdateCurrency(currency);
+            return SqlServerCrud.UpdateCurrency(currency, InitialCatalog);
         }
 
-        public static bool RemoveCurrency(Currency currency)
+        public static bool RemoveCurrency(Currency currency, string InitialCatalog = "Finances")
         {
-            return SqlServerCrud.RemoveCurrency(currency);
+            return SqlServerCrud.RemoveCurrency(currency, InitialCatalog);
         }
 
-        public static bool UpsertCurrency(Currency currency)
+        public static bool UpsertCurrency(Currency currency, string InitialCatalog = "Finances")
         {
-            if (GetCurrencyID(currency) == 0)
-                return AddCurrency(currency);
+            if (currency.ID == 0)
+                return AddCurrency(currency, InitialCatalog);
             else
-                return UpdateCurrency(currency);
+                return UpdateCurrency(currency, InitialCatalog);
+        }
+
+        public static bool RemoveAllDataInCurrencyTable(string InitialCatalog = "Finances")
+        {
+            return SqlServerCrud.RemoveAllDataInCurrencyTable(InitialCatalog);
         }
 
         public static List<Operation> GetIncomeExpenseDataByCurrency(bool isIncome)

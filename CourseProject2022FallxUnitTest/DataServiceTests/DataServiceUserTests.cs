@@ -16,83 +16,85 @@ namespace CourseProject2022FallxUnitTest.DataServiceTests
         [Fact]
         public void AddUser_True_CorrectUser()
         {
-            Assert.True(DataService.AddUser(new User { Name = "TestUser" }, fixture.InitialCatalog));
+            Assert.True(fixture.AddUser(new User { Name = "TestUser" }));
         }
 
         [Fact]
-        public void AddUser_False_DefaultUser()
+        public void AddUser_True_DefaultUser()
         {
-            Assert.True(DataService.AddUser(new User(), fixture.InitialCatalog));
+            Assert.True(fixture.AddUser(new User()));
         }
 
         [Fact]
         public void GetUser_False()
         {
             var user = new User { Name = "TestUser" };
-            DataService.AddUser(user, fixture.InitialCatalog);
-            Assert.False(DataService.GetUser(DataService.GetUserID(user, fixture.InitialCatalog), fixture.InitialCatalog).isDefault);
+            fixture.AddUser(user);
+            Assert.False(fixture.GetUserID(user) == 0);
         }
 
         [Fact]
-        public void GetUsers_False()
+        public void GetTargets_False()
         {
-            DataService.AddUser(new User { Name = "TestUser" }, fixture.InitialCatalog);
-            DataService.AddUser(new User { Name = "TestUser1" }, fixture.InitialCatalog);
-            Assert.False(DataService.GetUsers(fixture.InitialCatalog).IsNullOrEmpty());
+            fixture.AddUser(new User { Name = "TestUser" });
+            fixture.AddUser(new User { Name = "TestUser1" });
+            Assert.False(fixture.GetUsers().IsNullOrEmpty());
         }
 
         [Fact]
         public void GetUserID_True()
         {
             var user = new User { Name = "TestUser2" };
-            DataService.AddUser(user, fixture.InitialCatalog);
-            Assert.True(DataService.GetUserID(user, fixture.InitialCatalog) != 0);
+            fixture.AddUser(user);
+            Assert.True(fixture.GetUserID(user) != 0);
         }
 
         [Fact]
         public void UpdateUser_True()
         {
             var user = new User { Name = "UserNameForTest" };
-            DataService.AddUser(user, fixture.InitialCatalog);
-            user.ID = DataService.GetUserID(user, fixture.InitialCatalog);
-            Assert.True(DataService.GetUser(user.ID, fixture.InitialCatalog).Name == user.Name);
+            fixture.AddUser(user);
+            user.ID = fixture.GetUserID(user);
+            user.Name = "UserNameForTestNew";
+            fixture.UpdateUser(user);
+            Assert.True(fixture.GetUser(user.ID).Name == user.Name);
         }
 
         [Fact]
-        public void RemoveUser_True()
+        public void RemoveTarget_True()
         {
             var user = new User { Name = "UserNameForDeletion" };
-            DataService.AddUser(user, fixture.InitialCatalog);
-            user.ID = DataService.GetUserID(user, fixture.InitialCatalog);
-            DataService.RemoveUser(user, fixture.InitialCatalog);
-            Assert.True(DataService.GetUserID(user, fixture.InitialCatalog) == 0);
+            fixture.AddUser(user);
+            user.ID = fixture.GetUserID(user);
+            fixture.RemoveUser(user);
+            Assert.True(fixture.GetUserID(user) == 0);
         }
 
         [Fact]
         public void RemoveAllDataInUserTable_True()
         {
-            DataService.AddUser(new User { Name = "WowNewUser" }, fixture.InitialCatalog);
-            DataService.RemoveAllDataInUserTable(fixture.InitialCatalog);
-            Assert.True(DataService.GetUsers(fixture.InitialCatalog).IsNullOrEmpty());
+            fixture.AddUser(new User { Name = "WowNewUser" });
+            fixture.RemoveAllDataInUserTable();
+            Assert.True(fixture.GetUsers().IsNullOrEmpty());
         }
 
         [Fact]
         public void AddUsers_True()
         {
             var users = new List<User> { new User { Name = "User0" }, new User { Name = "User1" } };
-            DataService.AddUsers(users, fixture.InitialCatalog);
-            Assert.True(DataService.GetUsers(fixture.InitialCatalog).Count > 0);
+            fixture.AddUsers(users);
+            Assert.True(fixture.GetUsers().Count > 0);
         }
 
         [Fact]
         public void UpsertUser_True()
         {
             var user = new User { Name = "UserForUpsert" };
-            DataService.AddUser(user, fixture.InitialCatalog);
-            user.ID = DataService.GetUserID(user, fixture.InitialCatalog);
+            fixture.AddUser(user);
+            user.ID = fixture.GetUserID(user);
             user.Name = "UserNameChanged";
-            DataService.UpsertUser(user, fixture.InitialCatalog);
-            Assert.True(DataService.GetUser(user.ID, fixture.InitialCatalog).Name == user.Name);
+            fixture.UpsertUser(user);
+            Assert.True(fixture.GetUser(user.ID).Name == user.Name);
         }
     }
 }

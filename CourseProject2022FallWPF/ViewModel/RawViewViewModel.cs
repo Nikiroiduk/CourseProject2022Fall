@@ -111,7 +111,7 @@ namespace CourseProject2022FallWPF.ViewModel
         #endregion
 
 
-            #region Add
+        #region Add
         public ICommand Add { get; }
 
         private bool CanAdd(object p) => true;

@@ -10,7 +10,7 @@ namespace CourseProject2022FallBL.Models
 {
     public class Currency : INotifyPropertyChanged
     {
-        public int ID { get; set; }
+        public int ID { get; set; } = 0;
         public float Ratio { 
             get { return _Ratio; }
             set { _Ratio = value; NotifyPropertyChanged(); }

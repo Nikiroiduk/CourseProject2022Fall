@@ -3,6 +3,7 @@ using CourseProject2022FallWPF.Model.Commands;
 using CourseProject2022FallWPF.Services;
 using CourseProject2022FallWPF.View;
 using CourseProject2022FallWPF.View.Pages;
+using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 

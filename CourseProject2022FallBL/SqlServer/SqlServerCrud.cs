@@ -335,8 +335,9 @@ namespace CourseProject2022FallBL.SqlServer
 
         #region Currency
 
-        internal static bool AddCurrency(Currency currency)
+        internal static bool AddCurrency(Currency currency, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);
@@ -355,8 +356,9 @@ namespace CourseProject2022FallBL.SqlServer
             return true;
         }
 
-        internal static Currency GetCurrency(int ID)
+        internal static Currency GetCurrency(int ID, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             var res = new Currency();
             try
             {
@@ -378,8 +380,9 @@ namespace CourseProject2022FallBL.SqlServer
             return res;
         }
 
-        internal static List<Currency> GetCurrencies()
+        internal static List<Currency> GetCurrencies(string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             var res = new List<Currency>();
             try
             {
@@ -400,8 +403,9 @@ namespace CourseProject2022FallBL.SqlServer
             return res;
         }
 
-        internal static int GetCurrencyID(Currency currency)
+        internal static int GetCurrencyID(Currency currency, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             var res = 0;
             try
             {
@@ -424,8 +428,9 @@ namespace CourseProject2022FallBL.SqlServer
             return res;
         }
 
-        internal static bool UpdateCurrency(Currency currency)
+        internal static bool UpdateCurrency(Currency currency, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);
@@ -446,8 +451,9 @@ namespace CourseProject2022FallBL.SqlServer
             return true;
         }
 
-        internal static bool RemoveCurrency(Currency currency)
+        internal static bool RemoveCurrency(Currency currency, string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);
@@ -468,8 +474,9 @@ namespace CourseProject2022FallBL.SqlServer
             return true;
         }
 
-        internal static bool RemoveAllDataInCurrencyTable()
+        internal static bool RemoveAllDataInCurrencyTable(string InitialCatalog = "Finances")
         {
+            builder.InitialCatalog = InitialCatalog;
             try
             {
                 using SqlConnection connection = new(builder.ConnectionString);

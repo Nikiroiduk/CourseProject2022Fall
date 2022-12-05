@@ -1,12 +1,19 @@
 ﻿using CourseProject2022FallBL.Models;
 using CourseProject2022FallBL.Services;
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CourseProject2022FallxUnitTest.DataServiceTests
 {
-    public class DatabaseFixtureUser : IDisposable
+    public class DatabaseFixtureCurrency : IDisposable
     {
-        public string InitialCatalog { get; set; } = "UserTest";
+        public string InitialCatalog { get; set; } = "CurrencyTest";
 
         internal static SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
         {
@@ -16,7 +23,7 @@ namespace CourseProject2022FallxUnitTest.DataServiceTests
             Encrypt = false,
         };
 
-        public DatabaseFixtureUser()
+        public DatabaseFixtureCurrency()
         {
             using SqlConnection connection = new(builder.ConnectionString);
             var sql = $"use master;\r\n" +
@@ -63,33 +70,33 @@ namespace CourseProject2022FallxUnitTest.DataServiceTests
             connection.Close();
         }
 
-        #region User
-        public bool AddUser(User user) =>
-            DataService.AddUser(user, InitialCatalog);
+        #region Currency
+        public bool AddCurrency(Currency currency) =>
+            DataService.AddCurrency(currency, InitialCatalog);
 
-        public User GetUser(int id) =>
-            DataService.GetUser(id, InitialCatalog);
+        public Currency GetCurrency(int id) =>
+            DataService.GetCurrency(id, InitialCatalog);
 
-        public List<User> GetUsers() =>
-            DataService.GetUsers(InitialCatalog);
+        public List<Currency> GetCurrencies() =>
+            DataService.GetCurrencies(InitialCatalog);
 
-        public int GetUserID(User user) =>
-            DataService.GetUserID(user, InitialCatalog);
+        public int GetCurrencyID(Currency currency) =>
+            DataService.GetCurrencyID(currency, InitialCatalog);
 
-        public bool UpdateUser(User user) =>
-            DataService.UpdateUser(user, InitialCatalog);
+        public bool UpdateCurrency(Currency currency) =>
+            DataService.UpdateCurrency(currency, InitialCatalog);
 
-        public bool RemoveUser(User user) =>
-            DataService.RemoveUser(user, InitialCatalog);
+        public bool RemoveCurrency(Currency currency) =>
+            DataService.RemoveCurrency(currency, InitialCatalog);
 
-        public bool RemoveAllDataInUserTable() =>
-            DataService.RemoveAllDataInUserTable(InitialCatalog);
+        public bool RemoveAllDataInCurrencyTable() =>
+            DataService.RemoveAllDataInCurrencyTable(InitialCatalog);
 
-        public bool AddUsers(List<User> users) =>
-            DataService.AddUsers(users, InitialCatalog);
+        public bool AddCurrencies(List<Currency> currencies) =>
+            DataService.AddCurrencies(currencies, InitialCatalog);
 
-        public bool UpsertUser(User user) =>
-            DataService.UpsertUser(user, InitialCatalog);
+        public bool UpsertCurrency(Currency currency) =>
+            DataService.UpsertCurrency(currency, InitialCatalog);
         #endregion
 
 

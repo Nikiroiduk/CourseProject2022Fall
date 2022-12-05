@@ -1,13 +1,6 @@
 ﻿using CourseProject2022FallBL.Models;
 using CourseProject2022FallBL.Services;
 using Microsoft.Data.SqlClient;
-using Microsoft.IdentityModel.Tokens;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CourseProject2022FallxUnitTest.DataServiceTests
 {
@@ -70,34 +63,34 @@ namespace CourseProject2022FallxUnitTest.DataServiceTests
             connection.Close();
         }
 
-        //#region Target
-        //public bool AddTarget(Target target) => 
-        //    DataService.AddTarget(target, InitialCatalog);
+        #region Target
+        public bool AddTarget(Target target) =>
+            DataService.AddTarget(target, InitialCatalog);
 
-        //public Target GetTarget(int id) => 
-        //    DataService.GetTarget(id, InitialCatalog);
+        public Target GetTarget(int id) =>
+            DataService.GetTarget(id, InitialCatalog);
 
-        //public List<Target> GetTargets() => 
-        //    DataService.GetTargets(InitialCatalog);
+        public List<Target> GetTargets() =>
+            DataService.GetTargets(InitialCatalog);
 
-        //public int GetTargetID(Target target) => 
-        //    DataService.GetTargetID(target, InitialCatalog);
+        public int GetTargetID(Target target) =>
+            DataService.GetTargetID(target, InitialCatalog);
 
-        //public bool UpdateTarget(Target target) => 
-        //    DataService.UpdateTarget(target, InitialCatalog);
+        public bool UpdateTarget(Target target) =>
+            DataService.UpdateTarget(target, InitialCatalog);
 
-        //public bool RemoveTarget(Target target) => 
-        //    DataService.RemoveTarget(target, InitialCatalog);
+        public bool RemoveTarget(Target target) =>
+            DataService.RemoveTarget(target, InitialCatalog);
 
-        //public bool RemoveAllDataInTargetTable() =>
-        //    DataService.RemoveAllDataInTargetTable(InitialCatalog);
+        public bool RemoveAllDataInTargetTable() =>
+            DataService.RemoveAllDataInTargetTable(InitialCatalog);
 
-        //public bool AddTargets(List<Target> targets) => 
-        //    DataService.AddTargets(targets, InitialCatalog);
+        public bool AddTargets(List<Target> targets) =>
+            DataService.AddTargets(targets, InitialCatalog);
 
-        //public bool UpsertTarget(Target target) => 
-        //    DataService.UpsertTarget(target, InitialCatalog);
-        //#endregion
+        public bool UpsertTarget(Target target) =>
+            DataService.UpsertTarget(target, InitialCatalog);
+        #endregion
 
 
         public void Dispose()
